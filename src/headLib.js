@@ -19,7 +19,7 @@ const selectFileContent = function(fs, headParameters, headOption) {
   } = headParameters;
   
   let headOfFile=[];
-  for (let file of files) {
+  files.forEach((file)=>{
     let currentHeadFile = '==> ' + file + ' <==\n';
     if (files.length < 2) {
       currentHeadFile = '';
@@ -27,7 +27,7 @@ const selectFileContent = function(fs, headParameters, headOption) {
     let fileContent = readFile(fs, file);
     currentHeadFile += headOption(fileContent, count);
     headOfFile.push(currentHeadFile);
-  }
+  });
   return headOfFile.join('\n\n');
 }
 

@@ -1,26 +1,31 @@
 const parseInput = function(arguments) {
   return {
     type: 'n',
-    count: 10,
+    count: 10, 
     files: arguments
   };
 }
 
 const head = function(fs, headParameters) {
-  let {
-    type, count, files
-  } = headParameters;
   let options = {
     'n': getFirstNLines,
   }
-  let headOfFile = [];
+  return selectFileContent(fs, headParameters, options[headParameters.type]);
+}
+
+const selectFileContent = function(fs, headParameters, headOption) {
+  let {
+    type, count, files
+  } = headParameters;
+  
+  let headOfFile=[];
   for (let file of files) {
     let currentHeadFile = '==> ' + file + ' <==\n';
     if (files.length < 2) {
       currentHeadFile = '';
     }
     let fileContent = readFile(fs, file);
-    currentHeadFile += options[type](fileContent, count);
+    currentHeadFile += headOption(fileContent, count);
     headOfFile.push(currentHeadFile);
   }
   return headOfFile.join('\n\n');

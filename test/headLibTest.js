@@ -27,12 +27,12 @@ describe('parseInput', () => {
   it('should return an object of type, count and fileNames when all three arguments are passed', () => {
     deepEqual(parseInput(['-n1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
     deepEqual(parseInput(['-n1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(parseInput(['-n 1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
-    deepEqual(parseInput(['-n 1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
+    deepEqual(parseInput(['-n', '1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
+    deepEqual(parseInput(['-n', '1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
     deepEqual(parseInput(['-c1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
     deepEqual(parseInput(['-c1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(parseInput(['-c 1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
-    deepEqual(parseInput(['-c 1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
+    deepEqual(parseInput(['-c', '1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
+    deepEqual(parseInput(['-c', '1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
   });
 });
 
@@ -40,12 +40,12 @@ describe('getHeadParameters', () => {
   it('should return an object of type, count and fileNames when all three arguments are passed', () => {
     deepEqual(parseInput(['-n1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
     deepEqual(parseInput(['-n1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(parseInput(['-n 1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
-    deepEqual(parseInput(['-n 1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
+    deepEqual(parseInput(['-n', '1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
+    deepEqual(parseInput(['-n', '1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
     deepEqual(parseInput(['-c1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
     deepEqual(parseInput(['-c1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(parseInput(['-c 1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
-    deepEqual(parseInput(['-c 1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
+    deepEqual(parseInput(['-c', '1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
+    deepEqual(parseInput(['-c', '1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
   });
 });
 

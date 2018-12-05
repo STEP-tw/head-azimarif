@@ -16,6 +16,10 @@ const parseInput = function(arguments) {
   };
 }
 
+const fileNotFound = function(file) {
+  return 'head: ' + file + ': No such file or directory';
+}
+
 const getHeadParameters = function(headParameters){
   let type = headParameters[0].split('')[1];
   let count = headParameters[0].split('').splice(2).join('');
@@ -82,7 +86,7 @@ const readFile = function(fs, file) {
     fileContent.splice(numberOfLines);
     return fileContent.join('\n');
   }
-  return 'head: ' + file + ': No such file or directory';
+  return fileNotFound(file);
 }
 
 const isFileExists = function(fs, file) {

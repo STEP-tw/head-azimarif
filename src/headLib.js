@@ -35,6 +35,7 @@ const getHeadParameters = function(headParameters){
 const head = function(fs, headParameters) {
   let options = {
     'n': getFirstNLines,
+    'c': getFirstNBytes
   }
   return selectFileContent(fs, headParameters, options[headParameters.type]);
 }

@@ -22,6 +22,11 @@ const getFirstNLines = function(fileContent, count) {
   return fileContent.slice(0, count).join('\n');
 }
 
+const getFirstNBytes = function(fileContent, count) {
+  fileContent = fileContent.split('');
+  return fileContent.slice(0, count).join('');
+}
+
 const readFile = function(fs, file) {
   return fs.readFileSync(file, 'utf-8');
 }
@@ -29,5 +34,6 @@ const readFile = function(fs, file) {
 module.exports = {
   parseInput,
   head,
-  getFirstNLines
+  getFirstNLines,
+  getFirstNBytes
 }

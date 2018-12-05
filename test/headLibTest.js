@@ -1,6 +1,7 @@
 const {
   parseInput,
-  getFirstNLines
+  getFirstNLines,
+  getFirstNBytes
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -25,6 +26,19 @@ describe('getFirstNLines', () => {
   });
   it('should return 5 lines  when count is 5', () => {
     deepEqual(getFirstNLines(fileContent, 5), 'One\nTwo\nThree\nFour\nFive');
+  });
+});
+
+describe('getFirstNBytes', () => {
+  const fileContent = 'One\nTwo\nThree\nFour\nFive\nSix\nSeven\nEight\nNine\nTen';
+  it('should return 0 byte (empty string) when count is 0', () => {
+    deepEqual(getFirstNBytes(fileContent, 0), '');
+  });
+  it('should return 1 byte when count is 1', () => {
+    deepEqual(getFirstNBytes(fileContent, 1), 'O');
+  });
+  it('should return 5 bytes  when count is 5', () => {
+    deepEqual(getFirstNBytes(fileContent, 5), 'One\nT');
   });
 });
 

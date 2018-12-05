@@ -5,7 +5,8 @@ const {
   getFirstNBytes,
   getFileHeading,
   isCountAboveZero,
-  invalidCountMessage
+  invalidCountMessage,
+  displayHeadUsage
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -115,3 +116,11 @@ describe('invalidCountMessage', () => {
   });
 });
 
+describe('displayHeadUsage', () => {
+  it('should return usage message with type', () => {
+    deepEqual(displayHeadUsage('p'), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
+  });
+  it('should return usage message with type', () => {
+    deepEqual(displayHeadUsage('-'), 'head: illegal option -- -\nusage: head [-n lines | -c bytes] [file ...]');
+  });
+});

@@ -1,5 +1,5 @@
 const parseInput = function(arguments) {
-  if(arguments[0].match(/[-][a-zA-z]|[-]/)){
+  if(arguments[0].match(/[-][a-zA-Z]|![0-9]/)){
     return getHeadParameters(arguments);
   }
   if(isNaN(Math.abs(arguments[0]))){
@@ -47,10 +47,19 @@ const head = function(fs, headParameters) {
     'c': getFirstNBytes
   }
 
+  if(type != 'n' && type != 'c') {
+    return displayHeadUsage(type);
+  }
+
   if(!isCountAboveZero(count)) {
     return invalidCountMessage(type, count);
   }
   return selectFileContent(fs, headParameters, options[type]);
+}
+
+const displayHeadUsage = function (type) {
+  return "head: illegal option -- " + type + 
+    "\nusage: head [-n lines | -c bytes] [file ...]";
 }
 
 const invalidCountMessage = function(type, count) {
@@ -124,5 +133,6 @@ module.exports = {
   getFirstNBytes,
   getFileHeading,
   isCountAboveZero,
-  invalidCountMessage
+  invalidCountMessage,
+  displayHeadUsage
 }

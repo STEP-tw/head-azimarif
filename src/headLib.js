@@ -1,8 +1,18 @@
 const parseInput = function(arguments) {
+  if(arguments[0].includes('-n') || arguments[0].includes('-c')){
+    return undefined; //getHeadParameters(arguments);
+  }
+  if(isNaN(Math.abs(arguments[0]))){
+    return {
+      type : 'n',
+      count : 10, 
+      files : arguments
+    };
+  }
   return {
     type: 'n',
-    count: 10, 
-    files: arguments
+    count: Math.abs(arguments[0]),
+    files: arguments.splice(1)
   };
 }
 
@@ -17,7 +27,7 @@ const selectFileContent = function(fs, headParameters, headOption) {
   let {
     type, count, files
   } = headParameters;
-  
+
   let headOfFile=[];
   files.forEach((file)=>{
     let currentHeadFile = '==> ' + file + ' <==\n';

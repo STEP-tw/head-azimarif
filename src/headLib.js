@@ -13,8 +13,17 @@ const head = function(fs, headParameters) {
   let options = {
     'n': getFirstNLines,
   }
-  let fileContent = readFile(fs, files[0]);
-  return options[type](fileContent, count);
+  let headOfFile = [];
+  for (let file of files) {
+    let currentHeadFile = '==> ' + file + ' <==\n';
+    if (files.length < 2) {
+      currentHeadFile = '';
+    }
+    let fileContent = readFile(fs, file);
+    currentHeadFile += options[type](fileContent, count);
+    headOfFile.push(currentHeadFile);
+  }
+  return headOfFile.join('\n\n');
 }
 
 const getFirstNLines = function(fileContent, count) {
@@ -28,7 +37,10 @@ const getFirstNBytes = function(fileContent, count) {
 }
 
 const readFile = function(fs, file) {
-  return fs.readFileSync(file, 'utf-8');
+  let fileContent = fs.readFileSync(file, 'utf-8').split('\n');
+  let numberOfLines = fileContent.length - 1;
+  fileContent.splice(numberOfLines);
+  return fileContent.join('\n');
 }
 
 module.exports = {

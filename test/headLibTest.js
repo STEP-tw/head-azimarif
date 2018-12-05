@@ -6,7 +6,8 @@ const {
   getFileHeading,
   isCountAboveZero,
   invalidCountMessage,
-  displayHeadUsage
+  displayHeadUsage,
+  fileNotFound
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -122,5 +123,12 @@ describe('displayHeadUsage', () => {
   });
   it('should return usage message with type', () => {
     deepEqual(displayHeadUsage('-'), 'head: illegal option -- -\nusage: head [-n lines | -c bytes] [file ...]');
+  });
+});
+
+describe('fileNotFound', () => {
+  it('should return file not found message with file name', () => {
+    deepEqual(fileNotFound('myFile.txt'), 'head: myFile.txt: No such file or directory');
+    deepEqual(fileNotFound('123.txt'), 'head: 123.txt: No such file or directory');
   });
 });

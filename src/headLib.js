@@ -135,5 +135,6 @@ module.exports = {
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
-  getHeadParameters
+  getHeadParameters,
+  fileNotFound
 }

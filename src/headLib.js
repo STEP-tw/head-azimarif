@@ -1,6 +1,6 @@
 const parseInput = function(arguments) {
   if(arguments[0].includes('-n') || arguments[0].includes('-c')){
-    return undefined; //getHeadParameters(arguments);
+    return getHeadParameters(arguments);
   }
   if(isNaN(Math.abs(arguments[0]))){
     return {
@@ -13,6 +13,22 @@ const parseInput = function(arguments) {
     type: 'n',
     count: Math.abs(arguments[0]),
     files: arguments.splice(1)
+  };
+}
+
+const getHeadParameters = function(headParameters){
+  let type = headParameters[0].split('')[1];
+  let count = headParameters[0].split('').splice(2).join('');
+  headParameters = headParameters.splice(1);
+  let files = headParameters;
+  if(count==''){
+    count = headParameters[0];
+    files = headParameters.splice(1);
+  }
+  return {
+    type,
+    count,
+    files
   };
 }
 

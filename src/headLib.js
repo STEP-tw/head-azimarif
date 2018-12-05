@@ -59,6 +59,9 @@ const selectFileContent = function(fs, headParameters, headOption) {
     currentHeadFile += headOption(fileContent, count);
     headOfFile.push(currentHeadFile);
   });
+  if(headParameters.type == 'c') {
+    return headOfFile.join('\n');
+  }
   return headOfFile.join('\n\n');
 }
 

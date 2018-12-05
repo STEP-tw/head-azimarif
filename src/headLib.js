@@ -75,19 +75,25 @@ const selectFileContent = function(fs, headParameters, headOption) {
   } = headParameters;
 
   let headOfFile=[];
+  let delimiter='';
   files.forEach((file)=>{
-    let currentHeadFile = getFileHeading(file);
-    if (files.length < 2 || !isFileExists(fs, file)) {
-      currentHeadFile = '';
-    }
     let fileContent = readFile(fs, file);
-    currentHeadFile += headOption(fileContent, count);
-    headOfFile.push(currentHeadFile);
+    headOfFile.push(fileContent);
+    if(isFileExists(fs,file)){
+      headOfFile.pop();
+      let currentHeadFile = delimiter + getFileHeading(file);
+      delimiter = '\n';
+      if (files.length < 2 ) {
+        currentHeadFile = '';
+      }
+      currentHeadFile += headOption(fileContent, count) ;
+      headOfFile.push(currentHeadFile);
+    }
   });
   if(headParameters.type == 'c') {
     return headOfFile.join('\n');
   }
-  return headOfFile.join('\n\n');
+  return headOfFile.join('\n');
 }
 
 const getFirstNLines = function(fileContent, count) {

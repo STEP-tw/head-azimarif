@@ -134,5 +134,6 @@ module.exports = {
   getFileHeading,
   isCountAboveZero,
   invalidCountMessage,
-  displayHeadUsage
+  displayHeadUsage,
+  getHeadParameters
 }

@@ -1,5 +1,5 @@
 const parseInput = function(arguments) {
-  if(arguments[0].includes('-n') || arguments[0].includes('-c')){
+  if(arguments[0].match(/[-][a-zA-z]|[-]/)){
     return getHeadParameters(arguments);
   }
   if(isNaN(Math.abs(arguments[0]))){

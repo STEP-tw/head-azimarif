@@ -40,6 +40,10 @@ const head = function(fs, headParameters) {
   return selectFileContent(fs, headParameters, options[headParameters.type]);
 }
 
+const getFileHeading = function(file) {
+  return '==> ' + file + ' <==\n';
+}
+
 const selectFileContent = function(fs, headParameters, headOption) {
   let {
     type, count, files
@@ -47,7 +51,7 @@ const selectFileContent = function(fs, headParameters, headOption) {
 
   let headOfFile=[];
   files.forEach((file)=>{
-    let currentHeadFile = '==> ' + file + ' <==\n';
+    let currentHeadFile = getFileHeading(file);
     if (files.length < 2) {
       currentHeadFile = '';
     }
@@ -79,5 +83,6 @@ module.exports = {
   parseInput,
   head,
   getFirstNLines,
-  getFirstNBytes
+  getFirstNBytes,
+  getFileHeading
 }

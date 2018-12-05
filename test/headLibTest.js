@@ -2,7 +2,8 @@ const {
   parseInput,
   getHeadParameters,
   getFirstNLines,
-  getFirstNBytes
+  getFirstNBytes,
+  getFileHeading
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -75,6 +76,13 @@ describe('getFirstNBytes', () => {
 
   it('should return 5 bytes  when count is 5', () => {
     deepEqual(getFirstNBytes(fileContent, 5), 'One\nT');
+  });
+});
+
+describe('getFileHeading', () => {
+  it('should return the fileName with heading', () => {
+    let file = 'myFile.txt'
+    deepEqual(getFileHeading(file), '==> '+ file +' <==\n');
   });
 });
 

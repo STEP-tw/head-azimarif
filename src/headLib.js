@@ -6,6 +6,10 @@ const parseInput = function(arguments) {
   };
 }
 
+const readFile = function(fs, file) {
+  return fs.readFileSync(file, 'utf-8');
+}
+
 module.exports = {
-  parseInput
+  parseInput,
 }

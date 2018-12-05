@@ -76,10 +76,17 @@ const getFirstNBytes = function(fileContent, count) {
 }
 
 const readFile = function(fs, file) {
-  let fileContent = fs.readFileSync(file, 'utf-8').split('\n');
-  let numberOfLines = fileContent.length - 1;
-  fileContent.splice(numberOfLines);
-  return fileContent.join('\n');
+  if(isFileExists(fs, file)) {
+    let fileContent = fs.readFileSync(file, 'utf-8').split('\n');
+    let numberOfLines = fileContent.length - 1;
+    fileContent.splice(numberOfLines);
+    return fileContent.join('\n');
+  }
+  return 'head: ' + file + ': No such file or directory';
+}
+
+const isFileExists = function(fs, file) {
+  return fs.existsSync(file);
 }
 
 module.exports = {

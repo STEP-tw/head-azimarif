@@ -3,7 +3,9 @@ const {
   getHeadParameters,
   getFirstNLines,
   getFirstNBytes,
-  getFileHeading
+  getFileHeading,
+  isCountAboveZero,
+  invalidCountMessage
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -83,6 +85,33 @@ describe('getFileHeading', () => {
   it('should return the fileName with heading', () => {
     let file = 'myFile.txt'
     deepEqual(getFileHeading(file), '==> '+ file +' <==\n');
+  });
+});
+
+describe('isCountAboveZero', () => {
+  it('should return false if count is 0', () => {
+    deepEqual(isCountAboveZero(0), false);
+  });
+  it('should return false if count is less than 0', () => {
+    deepEqual(isCountAboveZero(-1), false);
+  });
+  it('should return false if count is non integer value', () => {
+    deepEqual(isCountAboveZero('a'), false);
+  });
+  it('should return true if count is greater than 0', () => {
+    deepEqual(isCountAboveZero(1), true);
+  });
+  it('should return true if count is greater than 0', () => {
+    deepEqual(isCountAboveZero(10), true);
+  });
+});
+
+describe('invalidCountMessage', () => {
+  it('should return message with line and count', () => {
+    deepEqual(invalidCountMessage('n',-1), 'head: illegal line count -- -1');
+  });
+  it('should return message with line and count', () => {
+    deepEqual(invalidCountMessage('c',-1), 'head: illegal byte count -- -1');
   });
 });
 

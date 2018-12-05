@@ -37,11 +37,32 @@ const getHeadParameters = function(headParameters){
 }
 
 const head = function(fs, headParameters) {
+  let {
+    type,
+    count,
+    files
+  } = headParameters;
   let options = {
     'n': getFirstNLines,
     'c': getFirstNBytes
   }
-  return selectFileContent(fs, headParameters, options[headParameters.type]);
+
+  if(!isCountAboveZero(count)) {
+    return invalidCountMessage(type, count);
+  }
+  return selectFileContent(fs, headParameters, options[type]);
+}
+
+const invalidCountMessage = function(type, count) {
+  let typeName = 'line';
+  if(type == 'c'){
+    typeName = 'byte';
+  }
+  return 'head: illegal ' + typeName + ' count -- ' + count;
+}
+
+const isCountAboveZero = function(count) {
+  return !(count < 1 || isNaN(count));
 }
 
 const getFileHeading = function(file) {
@@ -56,7 +77,7 @@ const selectFileContent = function(fs, headParameters, headOption) {
   let headOfFile=[];
   files.forEach((file)=>{
     let currentHeadFile = getFileHeading(file);
-    if (files.length < 2) {
+    if (files.length < 2 || !isFileExists(fs, file)) {
       currentHeadFile = '';
     }
     let fileContent = readFile(fs, file);
@@ -98,5 +119,7 @@ module.exports = {
   head,
   getFirstNLines,
   getFirstNBytes,
-  getFileHeading
+  getFileHeading,
+  isCountAboveZero,
+  invalidCountMessage
 }

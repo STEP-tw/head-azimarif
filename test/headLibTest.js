@@ -168,4 +168,34 @@ describe('head', () => {
       deepEqual(head(fileDetails, { type : 'c', count : 100, files : ['testFile'] }), 'This is the first Line.\nSecond Line\n1234\nEND');
     });
   });
+
+  describe('head with one file', ()=> {
+    let fileDetails1 = [
+      { 
+        content : 'This is the first Line.\nSecond Line\n1234\nEND',
+        name : 'testFile1',
+        isExists : true 
+      },
+      { 
+        content : 'One\nTwo\nThree\n',
+        name : 'testFile2',
+        isExists : true 
+      }
+    ];
+    it('should return one line from two files with their name as heading when input line is 1 and files are 2', () => {
+      deepEqual(head(fileDetails1, { type : 'n', count : 1 }), '==> testFile1 <==\nThis is the first Line.\n\n==> testFile2 <==\nOne');
+    });
+
+    it('should return all lines from two files with their name as heading when input line is greater than line count of files and files are 2', () => {
+      deepEqual(head(fileDetails1, { type : 'n', count : 10 }), '==> testFile1 <==\nThis is the first Line.\nSecond Line\n1234\nEND\n\n==> testFile2 <==\nOne\nTwo\nThree\n');
+    });
+
+    it('should return one character from two files with their name as heading when input character count is 1 and files are 2', () => {
+      deepEqual(head(fileDetails1, { type : 'c', count : 1 }), '==> testFile1 <==\nT\n==> testFile2 <==\nO');
+    });
+
+    it('should return all characters from two files with their name as heading when input character count is greater than total character length of files and files are 2', () => {
+      deepEqual(head(fileDetails1, { type : 'c', count : 10 }), '==> testFile1 <==\nThis is th\n==> testFile2 <==\nOne\nTwo\nTh');
+    });
+  });
 });

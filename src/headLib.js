@@ -1,18 +1,11 @@
 const parseInput = function(arguments) {
-  if(arguments[0].match(/[-][a-zA-Z]|![0-9]|[-][-]/)){
+  if(arguments[0][0] == '-') {
     return getHeadParameters(arguments);
   }
-  if(isNaN(Math.abs(arguments[0]))){
-    return {
-      type : 'n',
-      count : 10, 
-      files : arguments
-    };
-  }
-  return {
-    type: 'n',
-    count: Math.abs(arguments[0]),
-    files: arguments.splice(1)
+  return { 
+    type : 'n', 
+    count : 10, 
+    files : arguments 
   };
 }
 
@@ -21,18 +14,26 @@ const fileNotFound = function(file) {
 }
 
 const getHeadParameters = function(headParameters){
-  let type = headParameters[0].split('')[1];
-  let count = headParameters[0].split('').splice(2).join('');
-  headParameters = headParameters.splice(1);
-  let files = headParameters;
-  if(count==''){
-    count = headParameters[0];
-    files = headParameters.splice(1);
+  if(headParameters[0] == '-n' || headParameters[0] == '-c'){
+    return {
+      type : headParameters[0][1],
+      count : headParameters[1],
+      files : headParameters.slice(2)
+    };
   }
+
+  if(!isNaN(Math.abs(headParameters[0]))){
+    return {
+      type : 'n',
+      count : Math.abs(headParameters[0]),
+      files : headParameters.slice(1)
+    };
+  }
+
   return {
-    type,
-    count,
-    files
+    type : headParameters[0][1],
+    count : headParameters[0].slice(2),
+    files : headParameters.slice(1)
   };
 }
 

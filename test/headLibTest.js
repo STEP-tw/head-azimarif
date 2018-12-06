@@ -7,7 +7,8 @@ const {
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
-  fileNotFound
+  fileNotFound,
+  head
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -130,5 +131,41 @@ describe('fileNotFound', () => {
   it('should return file not found message with file name', () => {
     deepEqual(fileNotFound('myFile.txt'), 'head: myFile.txt: No such file or directory');
     deepEqual(fileNotFound('123.txt'), 'head: 123.txt: No such file or directory');
+  });
+});
+
+describe('head', () => {
+  describe('head with one file', ()=> {
+    let fileDetails = [
+      { 
+        content : 'This is the first Line.\nSecond Line\n1234\nEND',
+        file : 'testFile',
+        isExists : true 
+      }
+    ];
+
+    it('should return empty string when input line is 0 and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'n', count : 0, files : ['testFile'] }), '');
+    });
+
+    it('should return one line when input line is 1 and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'n', count : 1, files : ['testFile'] }), 'This is the first Line.');
+    });
+
+    it('should return all content of file when input line is greater than total file line length and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'n', count : 10, files : ['testFile'] }), 'This is the first Line.\nSecond Line\n1234\nEND');
+    });
+
+    it('should return empty string when input character count is 0 and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'c', count : 0, files : ['testFile'] }), '');
+    });
+
+    it('should return one character when input character count is 1 and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'c', count : 1, files : ['testFile'] }), 'T');
+    });
+
+    it('should return all content of file when input character count is greater than total file characters length and only file passed', () => {
+      deepEqual(head(fileDetails, { type : 'c', count : 100, files : ['testFile'] }), 'This is the first Line.\nSecond Line\n1234\nEND');
+    });
   });
 });

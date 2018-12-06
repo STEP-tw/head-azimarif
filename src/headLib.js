@@ -117,10 +117,7 @@ const getFirstNBytes = function(fileContent, count) {
 
 const readFile = function(fs, file) {
   if(isFileExists(fs, file)) {
-    let fileContent = fs.readFileSync(file, 'utf-8').split('\n');
-    let numberOfLines = fileContent.length - 1;
-    fileContent.splice(numberOfLines);
-    return fileContent.join('\n');
+    return fs.readFileSync(file, 'utf-8');
   }
   return fileNotFound(file);
 }

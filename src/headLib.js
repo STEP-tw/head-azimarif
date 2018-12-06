@@ -44,10 +44,6 @@ const runHead = function(fs, inputArgs) {
     count,
     files
   } = headParameters;
-  let options = {
-    'n': getFirstNLines,
-    'c': getFirstNBytes
-  }
 
   if(type != 'n' && type != 'c') {
     return displayHeadUsage(type);
@@ -58,7 +54,7 @@ const runHead = function(fs, inputArgs) {
   }
 
   let fileDetails = files.map((file)=> getFileDetails(fs,file));
-  return head(fileDetails, headParameters, options[type]);
+  return head(fileDetails, headParameters);
 }
 
 const displayHeadUsage = function (type) {
@@ -82,11 +78,17 @@ const getFileHeading = function(file) {
   return '==> ' + file + ' <==\n';
 }
 
-const head = function(fileDetails, headParameters, headOption) {
+const head = function(fileDetails, headParameters) {
   let {
     type, count, files
   } = headParameters;
 
+  let options = {
+    'n': getFirstNLines,
+    'c': getFirstNBytes
+  }
+  
+  let headOption = options[type];
   let headOfFile=[];
   let delimiter='';
   fileDetails.forEach(( fileDetail)=>{

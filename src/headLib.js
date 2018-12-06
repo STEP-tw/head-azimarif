@@ -56,7 +56,9 @@ const head = function(fs, inputArgs) {
   if(!isCountAboveZero(count)) {
     return invalidCountMessage(type, count);
   }
-  return selectFileContent(fs, headParameters, options[type]);
+
+  let fileDetails = files.map((file)=> getFileDetails(fs,file));
+  return selectFileContent(fileDetails, headParameters, options[type]);
 }
 
 const displayHeadUsage = function (type) {
@@ -80,24 +82,23 @@ const getFileHeading = function(file) {
   return '==> ' + file + ' <==\n';
 }
 
-const selectFileContent = function(fs, headParameters, headOption) {
+const selectFileContent = function(fileDetails, headParameters, headOption) {
   let {
     type, count, files
   } = headParameters;
 
   let headOfFile=[];
   let delimiter='';
-  files.forEach((file)=>{
-    let fileContent = readFile(fs, file);
-    headOfFile.push(fileContent);
-    if(isFileExists(fs,file)){
+  fileDetails.forEach(( fileDetail)=>{
+    headOfFile.push(fileDetail.content);
+    if(fileDetail.isExists) {
       headOfFile.pop();
-      let currentHeadFile = delimiter + getFileHeading(file);
+      let currentHeadFile = delimiter + getFileHeading(fileDetail.name);
       delimiter = '\n';
-      if (files.length < 2 ) {
+      if(fileDetails.length < 2) {
         currentHeadFile = '';
       }
-      currentHeadFile += headOption(fileContent, count) ;
+      currentHeadFile += headOption(fileDetail.content, count) ;
       headOfFile.push(currentHeadFile);
     }
   });
@@ -107,14 +108,26 @@ const selectFileContent = function(fs, headParameters, headOption) {
   return headOfFile.join('\n');
 }
 
-const getFirstNLines = function(fileContent, count) {
-  fileContent = fileContent.split('\n');
-  return fileContent.slice(0, count).join('\n');
+const getFirstNLines = function(content, count) {
+  content = content.split('\n');
+  return content.slice(0, count).join('\n');
 }
 
-const getFirstNBytes = function(fileContent, count) {
-  fileContent = fileContent.split('');
-  return fileContent.slice(0, count).join('');
+const getFirstNBytes = function(content, count) {
+  content = content.split('');
+  return content.slice(0, count).join('');
+}
+
+const getFileDetails = function(fs, file){
+  let fileDetail = {
+    content : readFile(fs, file),
+    name : file, 
+    isExists : true
+  };
+  if(!isFileExists(fs, file)) {
+      fileDetail.isExists = false;
+  }
+  return fileDetail;
 }
 
 const readFile = function(fs, file) {

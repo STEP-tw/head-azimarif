@@ -37,7 +37,8 @@ const getHeadParameters = function(headParameters){
   };
 }
 
-const head = function(fs, headParameters) {
+const head = function(fs, inputArgs) {
+  let headParameters = parseInput(inputArgs);
   let {
     type,
     count,

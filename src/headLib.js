@@ -37,7 +37,7 @@ const getHeadParameters = function(headParameters){
   };
 }
 
-const head = function(fs, inputArgs) {
+const runHead = function(fs, inputArgs) {
   let headParameters = parseInput(inputArgs);
   let {
     type,
@@ -58,7 +58,7 @@ const head = function(fs, inputArgs) {
   }
 
   let fileDetails = files.map((file)=> getFileDetails(fs,file));
-  return selectFileContent(fileDetails, headParameters, options[type]);
+  return head(fileDetails, headParameters, options[type]);
 }
 
 const displayHeadUsage = function (type) {
@@ -82,7 +82,7 @@ const getFileHeading = function(file) {
   return '==> ' + file + ' <==\n';
 }
 
-const selectFileContent = function(fileDetails, headParameters, headOption) {
+const head = function(fileDetails, headParameters, headOption) {
   let {
     type, count, files
   } = headParameters;
@@ -143,6 +143,7 @@ const isFileExists = function(fs, file) {
 
 module.exports = {
   parseInput,
+  runHead,
   head,
   getFirstNLines,
   getFirstNBytes,

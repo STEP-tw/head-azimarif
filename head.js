@@ -1,10 +1,10 @@
 const fs = require('fs');
 const {
-  head
+  runHead
 } = require('./src/headLib.js');
 
 const main = function() {
-  let headResult = head(fs, process.argv.slice(2));
+  let headResult = runHead(fs, process.argv.slice(2));
   console.log(headResult);
 };
 

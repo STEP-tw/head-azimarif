@@ -99,6 +99,9 @@ const selectFileContent = function(fs, headParameters, headOption) {
       headOfFile.push(currentHeadFile);
     }
   });
+  if(type == 'c'){
+    return headOfFile.join('');
+  }
   return headOfFile.join('\n');
 }
 

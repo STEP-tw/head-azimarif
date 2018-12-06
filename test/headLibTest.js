@@ -169,7 +169,7 @@ describe('head', () => {
     });
   });
 
-  describe('head with one file', ()=> {
+  describe('head with more than one file', ()=> {
     let fileDetails1 = [
       { 
         content : 'This is the first Line.\nSecond Line\n1234\nEND',

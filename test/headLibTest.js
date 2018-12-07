@@ -1,11 +1,11 @@
 const {
   getFirstNLines,
   getFirstNBytes,
-  getFileHeading,
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
-  head
+  head,
+  selectHeadOperation
 } = require('../src/headLib.js');
 const {
   deepEqual
@@ -140,5 +140,19 @@ describe('head', () => {
     it('should return all characters from two files with their name as heading when input character count is greater than total character length of files and files are 2', () => {
       deepEqual(head(fileDetails1, { type : 'c', count : 10 }), '==> testFile1 <==\nThis is th\n==> testFile2 <==\nOne\nTwo\nTh');
     });
+  });
+});
+
+describe('selectHeadOperation', () => {
+  it('should return getFirstNLines function when option is n', () => {
+    deepEqual(selectHeadOperation('n'), getFirstNLines);
+  });
+
+  it('should return getFirstNBytes function when option is c', () => {
+    deepEqual(selectHeadOperation('c'), getFirstNBytes);
+  });
+ 
+  it('should return undefined when option is other than n or c', () => {
+    deepEqual(selectHeadOperation('o'), undefined);
   });
 });

@@ -96,4 +96,5 @@ module.exports = {
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
+  selectHeadOperation
 }

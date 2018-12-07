@@ -5,7 +5,8 @@ const {
   invalidCountMessage,
   displayHeadUsage,
   head,
-  selectHeadOperation
+  selectHeadOperation,
+  runHead
 } = require('../src/headLib.js');
 const {
   deepEqual

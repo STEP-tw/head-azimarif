@@ -92,7 +92,7 @@ const head = function(fileDetails, headParameters) {
   let headOfFile=[];
   let delimiter='';
   fileDetails.forEach(( fileDetail)=>{
-    headOfFile.push(fileDetail.content);
+    headOfFile.push(fileDetail.errorMessage);
     if(fileDetail.isExists) {
       headOfFile.pop();
       let currentHeadFile = delimiter + getFileHeading(fileDetail.name);
@@ -124,10 +124,12 @@ const getFileDetails = function(fs, file){
   let fileDetail = {
     content : readFile(fs, file),
     name : file, 
-    isExists : true
+    isExists : true,
+    errorMessage : ''
   };
   if(!isFileExists(fs, file)) {
       fileDetail.isExists = false;
+      fileDetail.errorMessage = fileNotFound(file);
   }
   return fileDetail;
 }
@@ -136,7 +138,6 @@ const readFile = function(fs, file) {
   if(isFileExists(fs, file)) {
     return fs.readFileSync(file, 'utf-8');
   }
-  return fileNotFound(file);
 }
 
 const isFileExists = function(fs, file) {

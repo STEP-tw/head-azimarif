@@ -44,29 +44,31 @@ const isCountAboveZero = function(count) {
   return !(count < 1 || isNaN(count));
 }
 
-const head = function(fileDetails, headParameters) {
-  let {
-    type, count, files
-  } = headParameters;
-
+const selectHeadOperation = function(headOption) {
   let options = {
     'n': getFirstNLines,
     'c': getFirstNBytes
   }
+  return options[headOption];
+}
+
+const head = function(fileDetails, headParameters) {
+  let { type, count } = headParameters;
   
-  let headOption = options[type];
+  let headOperation = selectHeadOperation(type);
   let headOfFile=[];
   let delimiter='';
-  fileDetails.forEach(( fileDetail)=>{
+  fileDetails.forEach((fileDetail)=>{
     headOfFile.push(fileDetail.errorMessage);
     if(fileDetail.isExists) {
-      headOfFile.pop();
+      //To remove the error message pushed only if file exists
+      headOfFile.pop(); 
       let currentHeadFile = delimiter + getFileHeading(fileDetail.name);
       delimiter = '\n';
       if(fileDetails.length < 2) {
         currentHeadFile = '';
       }
-      currentHeadFile += headOption(fileDetail.content, count) ;
+      currentHeadFile += headOperation(fileDetail.content, count) ;
       headOfFile.push(currentHeadFile);
     }
   });

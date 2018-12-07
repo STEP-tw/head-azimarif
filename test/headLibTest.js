@@ -5,7 +5,6 @@ const {
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
-  fileNotFound,
   head
 } = require('../src/headLib.js');
 const {
@@ -42,13 +41,6 @@ describe('getFirstNBytes', () => {
   });
 });
 
-describe('getFileHeading', () => {
-  it('should return the fileName with heading', () => {
-    let file = 'myFile.txt'
-    deepEqual(getFileHeading(file), '==> '+ file +' <==\n');
-  });
-});
-
 describe('isCountAboveZero', () => {
   it('should return false if count is 0', () => {
     deepEqual(isCountAboveZero(0), false);
@@ -82,13 +74,6 @@ describe('displayHeadUsage', () => {
   });
   it('should return usage message with type', () => {
     deepEqual(displayHeadUsage('-'), 'head: illegal option -- -\nusage: head [-n lines | -c bytes] [file ...]');
-  });
-});
-
-describe('fileNotFound', () => {
-  it('should return file not found message with file name', () => {
-    deepEqual(fileNotFound('myFile.txt'), 'head: myFile.txt: No such file or directory');
-    deepEqual(fileNotFound('123.txt'), 'head: 123.txt: No such file or directory');
   });
 });
 

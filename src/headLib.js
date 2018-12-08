@@ -54,7 +54,6 @@ const selectHeadOperation = function(headOption) {
 
 const head = function(fileDetails, headParameters) {
   let { type, count } = headParameters;
-  
   let headOperation = selectHeadOperation(type);
   let headOfFile=[];
   let delimiter='';
@@ -63,18 +62,15 @@ const head = function(fileDetails, headParameters) {
     if(fileDetail.isExists) {
       //To remove the error message pushed only if file exists
       headOfFile.pop(); 
-      let currentHeadFile = delimiter + getFileHeading(fileDetail.name);
-      delimiter = '\n';
-      if(fileDetails.length < 2) {
-        currentHeadFile = '';
+      let currentHeadFile = '';
+      if(fileDetails.length > 1) {
+        currentHeadFile = delimiter + getFileHeading(fileDetail.name);
+        delimiter = '\n';
       }
       currentHeadFile += headOperation(fileDetail.content, count) ;
       headOfFile.push(currentHeadFile);
     }
   });
-  if(type == 'c'){
-    return headOfFile.join('');
-  }
   return headOfFile.join('\n');
 }
 

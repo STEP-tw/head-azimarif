@@ -135,11 +135,11 @@ describe('head', () => {
     });
 
     it('should return one character from two files with their name as heading when input character count is 1 and files are 2', () => {
-      deepEqual(head(fileDetails1, { type : 'c', count : 1 }), '==> testFile1 <==\nT\n==> testFile2 <==\nO');
+      deepEqual(head(fileDetails1, { type : 'c', count : 1 }), '==> testFile1 <==\nT\n\n==> testFile2 <==\nO');
     });
 
     it('should return all characters from two files with their name as heading when input character count is greater than total character length of files and files are 2', () => {
-      deepEqual(head(fileDetails1, { type : 'c', count : 10 }), '==> testFile1 <==\nThis is th\n==> testFile2 <==\nOne\nTwo\nTh');
+      deepEqual(head(fileDetails1, { type : 'c', count : 10 }), '==> testFile1 <==\nThis is th\n\n==> testFile2 <==\nOne\nTwo\nTh');
     });
   });
 });

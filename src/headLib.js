@@ -55,23 +55,19 @@ const selectHeadOperation = function(headOption) {
 const head = function(fileDetails, headParameters) {
   let { type, count } = headParameters;
   let headOperation = selectHeadOperation(type);
-  let headOfFile=[];
   let delimiter='';
-  fileDetails.forEach((fileDetail)=>{
-    headOfFile.push(fileDetail.errorMessage);
+  return fileDetails.map((fileDetail)=>{
     if(fileDetail.isExists) {
-      //To remove the error message pushed only if file exists
-      headOfFile.pop(); 
       let currentHeadFile = '';
       if(fileDetails.length > 1) {
         currentHeadFile = delimiter + getFileHeading(fileDetail.name);
         delimiter = '\n';
       }
-      currentHeadFile += headOperation(fileDetail.content, count) ;
-      headOfFile.push(currentHeadFile);
+      currentHeadFile += headOperation(fileDetail.content, count);
+      return currentHeadFile;
     }
-  });
-  return headOfFile.join('\n');
+    return fileDetail.errorMessage;
+  }).join('\n');
 }
 
 const getFirstNLines = function(content, count) {

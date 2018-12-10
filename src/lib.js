@@ -40,9 +40,9 @@ const runTail = function(fs, inputArgs) {
     return displayHeadUsage(type);
   }
 
-  if(!isCountAboveZero(count)) {
-    return invalidCountMessage(type, count);
-  }
+  // if(!isCountAboveZero(count)) {
+  //   return invalidCountMessage(type, count);
+  // }
 
   let fileDetails = files.map((file)=> getFileDetailsInReverse(fs,file));
   return tail(fileDetails, tailParameters);
@@ -92,7 +92,8 @@ const head = function(fileDetails, headParameters) {
 }
 
 const tail = function(fileDetails, tailParameters) {
-  let { type, count } = tailParameters;
+  let type = tailParameters.type;
+  let count = Math.abs(tailParameters.count);
   let tailOperation = selectHeadOperation(type);
   let delimiter='';
   return fileDetails.map((fileDetail)=>{

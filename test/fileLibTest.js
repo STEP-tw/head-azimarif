@@ -2,7 +2,8 @@ const {
   getFileHeading,
   fileNotFound,
   getFileDetails,
-  fileNotFoundMessageForTail
+  fileNotFoundMessageForTail,
+  getFileDetailsInReverse
 } = require('../src/fileLib.js');
 const {
   runHead
@@ -51,12 +52,31 @@ describe('getFileDetails', () => {
       errorMessage: ''
     });
   });
-  it('should return the content of the file when file exists ', () => {
+  it('should return the error message if the file does not exist ', () => {
     deepEqual(getFileDetails(fs, "file9"), {
       content: undefined,
       name: 'file9',
       isExists: false,
       errorMessage: 'head: file9: No such file or directory'
+    });
+  });
+});
+
+describe('getFileDetailsInReverse', () => {
+  it('should return the content of the file when file exists ', () => {
+    deepEqual(getFileDetailsInReverse(fs, "file1"), {
+      content: '2 eniL\n1 elif fo tnetnoc eht si sihT',
+      name: 'file1',
+      isExists: true,
+      errorMessage: ''
+    });
+  });
+  it('should return the error message if the file does not exist ', () => {
+    deepEqual(getFileDetailsInReverse(fs, "file9"), {
+      content: undefined,
+      name: 'file9',
+      isExists: false,
+      errorMessage: 'tail: file9: No such file or directory'
     });
   });
 });

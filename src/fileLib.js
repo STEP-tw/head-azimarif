@@ -51,5 +51,6 @@ module.exports = {
   readFile,
   isFileExists,
   getFileDetailsInReverse,
-  fileNotFoundMessageForTail
+  fileNotFoundMessageForTail,
+  getFileDetailsInReverse
 };

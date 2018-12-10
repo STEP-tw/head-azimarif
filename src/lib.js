@@ -40,7 +40,7 @@ const runTail = function(fs, inputArgs) {
     return displayHeadUsage(type);
   }
 
-  if(isTailCountInvalid(count)) {
+  if(!isTailCountInvalid(count)) {
     return invalidCountMessageForTail(count);
   }
 
@@ -66,7 +66,7 @@ const invalidCountMessageForTail = function(count) {
 }
 
 const isTailCountInvalid = function(count) {
-  return isNaN(count);
+  return !isNaN(count);
 }
 
 const isCountAboveZero = function(count) {
@@ -137,5 +137,6 @@ module.exports = {
   invalidCountMessage,
   displayHeadUsage,
   selectHeadOperation,
-  runTail
+  runTail,
+  isTailCountInvalid
 }

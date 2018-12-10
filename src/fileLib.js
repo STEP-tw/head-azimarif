@@ -2,6 +2,10 @@ const fileNotFound = function(file) {
   return "head: " + file + ": No such file or directory";
 };
 
+const fileNotFoundMessageForTail = function(file) {
+  return "tail: " + file + ": No such file or directory";
+};
+
 const getFileHeading = function(file) {
   return "==> " + file + " <==\n";
 };
@@ -24,7 +28,9 @@ const getFileDetailsInReverse = function(fs, file) {
   let fileDetail = getFileDetails(fs, file);
   if (fileDetail.content != undefined) {
     fileDetail.content = fileDetail.content.split('').reverse().join('');
+    return fileDetail;
   }
+  fileDetail.errorMessage = fileNotFoundMessageForTail(file);
   return fileDetail;
 };
 

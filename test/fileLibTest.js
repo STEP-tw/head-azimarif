@@ -1,7 +1,8 @@
 const {
   getFileHeading,
   fileNotFound,
-  getFileDetails
+  getFileDetails,
+  fileNotFoundMessageForTail
 } = require('../src/fileLib.js');
 const {
   runHead
@@ -99,5 +100,12 @@ describe('runHead', () => {
     it('should return usage message when option other than n or c is given', () => {
       deepEqual(runHead(fs, ['-p', '0', 'file1']), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
     });
+  });
+});
+
+describe('fileNotFoundMessageForTail', () => {
+  it('should return file not found message as per tail', () => {
+    let file = 'myFile.txt'
+    deepEqual(fileNotFoundMessageForTail(file), 'tail: ' + file + ': No such file or directory');
   });
 });

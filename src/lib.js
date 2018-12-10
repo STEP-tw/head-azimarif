@@ -40,9 +40,9 @@ const runTail = function(fs, inputArgs) {
     return displayHeadUsage(type);
   }
 
-  // if(!isCountAboveZero(count)) {
-  //   return invalidCountMessage(type, count);
-  // }
+  if(isTailCountInvalid(count)) {
+    return invalidCountMessageForTail(count);
+  }
 
   let fileDetails = files.map((file)=> getFileDetailsInReverse(fs,file));
   return tail(fileDetails, tailParameters);
@@ -59,6 +59,14 @@ const invalidCountMessage = function(type, count) {
     typeName = 'byte';
   }
   return 'head: illegal ' + typeName + ' count -- ' + count;
+}
+
+const invalidCountMessageForTail = function(count) {
+  return "tail: illegal offset -- " + count;
+}
+
+const isTailCountInvalid = function(count) {
+  return isNaN(count);
 }
 
 const isCountAboveZero = function(count) {

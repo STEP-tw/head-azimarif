@@ -4,7 +4,8 @@ const {
 
 const {
   getFileDetails,
-  getFileHeading
+  getFileHeading,
+  getFileDetailsInReverse
 } = require('./fileLib.js');
 
 const runHead = function(fs, inputArgs) {
@@ -25,6 +26,26 @@ const runHead = function(fs, inputArgs) {
 
   let fileDetails = files.map((file)=> getFileDetails(fs,file));
   return head(fileDetails, headParameters);
+}
+
+const runTail = function(fs, inputArgs) {
+  let tailParameters = parseInput(inputArgs);
+  let {
+    type,
+    count,
+    files
+  } = tailParameters;
+
+  if(type != 'n' && type != 'c') {
+    return displayHeadUsage(type);
+  }
+
+  if(!isCountAboveZero(count)) {
+    return invalidCountMessage(type, count);
+  }
+
+  let fileDetails = files.map((file)=> getFileDetailsInReverse(fs,file));
+  return tail(fileDetails, tailParameters);
 }
 
 const displayHeadUsage = function (type) {
@@ -70,6 +91,24 @@ const head = function(fileDetails, headParameters) {
   }).join('\n');
 }
 
+const tail = function(fileDetails, tailParameters) {
+  let { type, count } = tailParameters;
+  let tailOperation = selectHeadOperation(type);
+  let delimiter='';
+  return fileDetails.map((fileDetail)=>{
+    if(fileDetail.isExists) {
+      let currentHeadFile = '';
+      if(fileDetails.length > 1) {
+        currentHeadFile = delimiter + getFileHeading(fileDetail.name);
+        delimiter = '\n';
+      }
+      currentHeadFile += tailOperation(fileDetail.content, count).split('').reverse().join('');
+      return currentHeadFile;
+    }
+    return fileDetail.errorMessage;
+  }).join('\n');
+}
+
 const getFirstNLines = function(content, count) {
   content = content.split('\n');
   return content.slice(0, count).join('\n');
@@ -88,5 +127,6 @@ module.exports = {
   isCountAboveZero,
   invalidCountMessage,
   displayHeadUsage,
-  selectHeadOperation
+  selectHeadOperation,
+  runTail
 }

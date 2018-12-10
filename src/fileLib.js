@@ -20,6 +20,12 @@ const getFileDetails = function(fs, file){
   return fileDetail;
 }
 
+const getFileDetailsInReverse = function(fs, file){
+  let fileDetail = getFileDetails(fs, file);
+  fileDetail.content = fileDetail.content.split('').reverse().join('');
+  return fileDetail;
+}
+
 const readFile = function(fs, file) {
   if(isFileExists(fs, file)) {
     return fs.readFileSync(file, 'utf-8');
@@ -35,5 +41,6 @@ module.exports = {
   fileNotFound,
   getFileDetails,
   readFile,
-  isFileExists
+  isFileExists,
+  getFileDetailsInReverse
 }

@@ -5,8 +5,7 @@ const {
   invalidCountMessage,
   displayHeadUsage,
   head,
-  selectHeadOperation,
-  isTailCountInvalid
+  selectHeadOperation
 } = require('../src/lib.js');
 const {
   deepEqual
@@ -155,23 +154,5 @@ describe('selectHeadOperation', () => {
  
   it('should return undefined when option is other than n or c', () => {
     deepEqual(selectHeadOperation('o'), undefined);
-  });
-});
-
-describe('isTailCountInvalid', () => {
-  it('should return getFirstNBytes function when option is c', () => {
-    deepEqual(isTailCountInvalid(0), true);
-  });
-
-  it('should return getFirstNBytes function when option is c', () => {
-    deepEqual(isTailCountInvalid(1), true);
-  });
-  
-  it('should return getFirstNLines function when option is n', () => {
-    deepEqual(isTailCountInvalid('a'), false);
-  });
-
-  it('should return getFirstNBytes function when option is c', () => {
-    deepEqual(isTailCountInvalid('-c'), false);
   });
 });

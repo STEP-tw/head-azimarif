@@ -3,6 +3,11 @@ const {
 } = require('./headInputLib.js');
 
 const {
+  isNumberGreater,
+  isValueNumber
+} = require('../src/util.js')
+
+const {
   getFileDetails,
   getFileHeading,
   getFileDetailsInReverse
@@ -40,7 +45,7 @@ const runTail = function(fs, inputArgs) {
     return displayHeadUsage(type);
   }
 
-  if(!isTailCountInvalid(count)) {
+  if(!isValueNumber(count)) {
     return invalidCountMessageForTail(count);
   }
 
@@ -65,12 +70,9 @@ const invalidCountMessageForTail = function(count) {
   return "tail: illegal offset -- " + count;
 }
 
-const isTailCountInvalid = function(count) {
-  return !isNaN(count);
-}
-
 const isCountAboveZero = function(count) {
-  return !(count < 1 || isNaN(count));
+  let isGreaterThanZero = isNumberGreater(0);
+  return (isGreaterThanZero(count) && isValueNumber(count));
 }
 
 const selectHeadOperation = function(headOption) {
@@ -137,6 +139,5 @@ module.exports = {
   invalidCountMessage,
   displayHeadUsage,
   selectHeadOperation,
-  runTail,
-  isTailCountInvalid
+  runTail
 }

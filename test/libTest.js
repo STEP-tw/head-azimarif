@@ -5,7 +5,8 @@ const {
   invalidCountMessage,
   displayHeadUsage,
   head,
-  selectHeadOperation
+  selectHeadOperation,
+  displayTailUsage
 } = require('../src/lib.js');
 const {
   deepEqual
@@ -154,5 +155,14 @@ describe('selectHeadOperation', () => {
  
   it('should return undefined when option is other than n or c', () => {
     deepEqual(selectHeadOperation('o'), undefined);
+  });
+});
+
+describe('displayTailUsage', () => {
+  it('should return usage message with type', () => {
+    deepEqual(displayTailUsage('p'), 'tail: illegal option -- pusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
+  });
+  it('should return usage message with type', () => {
+    deepEqual(displayTailUsage('-'), 'tail: illegal option -- -usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
   });
 });

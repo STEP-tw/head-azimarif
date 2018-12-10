@@ -42,7 +42,7 @@ const runTail = function(fs, inputArgs) {
   } = tailParameters;
 
   if(type != 'n' && type != 'c') {
-    return displayHeadUsage(type);
+    return displayTailUsage(type);
   }
 
   if(!isValueNumber(count)) {
@@ -56,6 +56,11 @@ const runTail = function(fs, inputArgs) {
 const displayHeadUsage = function (type) {
   return "head: illegal option -- " + type + 
     "\nusage: head [-n lines | -c bytes] [file ...]";
+}
+
+const displayTailUsage = function (type) {
+  return 'tail: illegal option -- ' + type +
+    'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
 }
 
 const invalidCountMessage = function(type, count) {
@@ -139,5 +144,6 @@ module.exports = {
   invalidCountMessage,
   displayHeadUsage,
   selectHeadOperation,
-  runTail
+  runTail,
+  displayTailUsage
 }

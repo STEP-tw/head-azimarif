@@ -5,7 +5,7 @@ const {
 } = require('../src/fileLib.js');
 const {
   runHead
-} = require('../src/headLib.js');
+} = require('../src/lib.js');
 const {
   deepEqual
 } = require('assert');

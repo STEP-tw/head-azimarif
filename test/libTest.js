@@ -7,7 +7,7 @@ const {
   head,
   selectHeadOperation,
   runHead
-} = require('../src/headLib.js');
+} = require('../src/lib.js');
 const {
   deepEqual
 } = require('assert');

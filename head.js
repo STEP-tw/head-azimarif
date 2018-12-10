@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {
   runHead
-} = require('./src/headLib.js');
+} = require('./src/lib.js');
 
 const main = function() {
   let headResult = runHead(fs, process.argv.slice(2));

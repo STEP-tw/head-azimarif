@@ -1,40 +1,42 @@
 const fileNotFound = function(file) {
-  return 'head: ' + file + ': No such file or directory';
-}
+  return "head: " + file + ": No such file or directory";
+};
 
 const getFileHeading = function(file) {
-  return '==> ' + file + ' <==\n';
-}
+  return "==> " + file + " <==\n";
+};
 
-const getFileDetails = function(fs, file){
+const getFileDetails = function(fs, file) {
   let fileDetail = {
-    content : readFile(fs, file),
-    name : file, 
-    isExists : true,
-    errorMessage : ''
+    content: readFile(fs, file),
+    name: file,
+    isExists: true,
+    errorMessage: ""
   };
-  if(!isFileExists(fs, file)) {
-      fileDetail.isExists = false;
-      fileDetail.errorMessage = fileNotFound(file);
+  if (!isFileExists(fs, file)) {
+    fileDetail.isExists = false;
+    fileDetail.errorMessage = fileNotFound(file);
   }
   return fileDetail;
-}
+};
 
-const getFileDetailsInReverse = function(fs, file){
+const getFileDetailsInReverse = function(fs, file) {
   let fileDetail = getFileDetails(fs, file);
-  fileDetail.content = fileDetail.content.split('').reverse().join('');
+  if (fileDetail.content != undefined) {
+    fileDetail.content = fileDetail.content.split('').reverse().join('');
+  }
   return fileDetail;
-}
+};
 
 const readFile = function(fs, file) {
-  if(isFileExists(fs, file)) {
-    return fs.readFileSync(file, 'utf-8');
+  if (isFileExists(fs, file)) {
+    return fs.readFileSync(file, "utf-8");
   }
-}
+};
 
 const isFileExists = function(fs, file) {
   return fs.existsSync(file);
-}
+};
 
 module.exports = {
   getFileHeading,
@@ -43,4 +45,4 @@ module.exports = {
   readFile,
   isFileExists,
   getFileDetailsInReverse
-}
+};

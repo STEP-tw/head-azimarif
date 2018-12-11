@@ -79,10 +79,10 @@ describe('invalidCountMessage', () => {
 
 describe('displayUsage', () => {
   it('should return head usage message with type', () => {
-    deepEqual(displayUsage('head', 'p'), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
+    deepEqual(displayUsage({ option: 'head', type: 'p'}), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
   });
   it('should return tail usage message with type', () => {
-    deepEqual(displayUsage('tail', '-'), 'tail: illegal option -- -\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
+    deepEqual(displayUsage({ option: 'tail', type: '-'}), 'tail: illegal option -- -\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
   });
 });
 

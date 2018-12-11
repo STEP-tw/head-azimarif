@@ -4,7 +4,8 @@ const {
 
 const {
   isNumberGreater,
-  isValueNumber
+  isValueNumber,
+  reverseText
 } = require('../src/util.js')
 
 const {
@@ -113,13 +114,13 @@ const tail = function(fileDetails, tailParameters) {
   let delimiter='';
   return fileDetails.map((fileDetail)=>{
     if(fileDetail.isExists) {
-      let currentHeadFile = '';
+      let currentTailFile = '';
       if(fileDetails.length > 1) {
-        currentHeadFile = delimiter + getFileHeading(fileDetail.name);
+        currentTailFile = delimiter + getFileHeading(fileDetail.name);
         delimiter = '\n';
       }
-      currentHeadFile += tailOperation(fileDetail.content, count).split('').reverse().join('');
-      return currentHeadFile;
+      currentTailFile += reverseText(tailOperation(fileDetail.content, count));
+      return currentTailFile;
     }
     return fileDetail.errorMessage;
   }).join('\n');

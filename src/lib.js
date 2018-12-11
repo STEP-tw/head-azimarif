@@ -27,7 +27,7 @@ const runHead = function(fs, inputArgs) {
   }
 
   if(!isCountAboveZero(count)) {
-    return invalidCountMessage(type, count, '');
+    return invalidCountMessage({ option: 'head', type, count });
   }
 
   let fileDetails = files.map((file)=> getFileDetails(fs,file));
@@ -47,7 +47,7 @@ const runTail = function(fs, inputArgs) {
   }
 
   if(!isValueNumber(count)) {
-    return invalidCountMessageForTail(count);
+    return invalidCountMessage({ option: 'tail', type, count });
   }
 
   let fileDetails = files.map((file)=> getFileDetailsInReverse(fs,file));
@@ -64,16 +64,19 @@ const displayUsage = function (option, type) {
   return usageMessage[option];
 }
 
-const invalidCountMessage = function(type, count) {
-  let typeName = 'line';
-  if(type == 'c'){
-    typeName = 'byte';
+const invalidCountMessage = function(messageParameters) {
+  let { option, type, count } = messageParameters;
+  let invalidMessage = {
+    head: {
+      n: 'head: illegal line count -- ' + count,
+      c: 'head: illegal byte count -- ' + count
+    },
+    tail: {
+      n: 'tail: illegal offset -- ' + count,
+      c: 'tail: illegal offset -- ' + count
+    }
   }
-  return 'head: illegal ' + typeName + ' count -- ' + count;
-}
-
-const invalidCountMessageForTail = function(count) {
-  return "tail: illegal offset -- " + count;
+  return invalidMessage[option][type];
 }
 
 const isCountAboveZero = function(count) {

@@ -5,8 +5,7 @@ const {
   invalidCountMessage,
   displayUsage,
   head,
-  selectHeadOperation,
-  displayTailUsage
+  selectHeadOperation
 } = require('../src/lib.js');
 const {
   deepEqual
@@ -62,10 +61,19 @@ describe('isCountAboveZero', () => {
 
 describe('invalidCountMessage', () => {
   it('should return message with line and count', () => {
-    deepEqual(invalidCountMessage('n',-1), 'head: illegal line count -- -1');
+    deepEqual(invalidCountMessage({ option: 'head', type: 'n', count: -1 }), 'head: illegal line count -- -1');
   });
+
   it('should return message with line and count', () => {
-    deepEqual(invalidCountMessage('c',-1), 'head: illegal byte count -- -1');
+    deepEqual(invalidCountMessage({ option: 'head', type: 'c', count: -1 }), 'head: illegal byte count -- -1');
+  });
+
+  it('should return message with line and count', () => {
+    deepEqual(invalidCountMessage({ option: 'tail', type: 'n', count: -1 }), 'tail: illegal offset -- -1');
+  });
+
+  it('should return message with line and count', () => {
+    deepEqual(invalidCountMessage({ option: 'tail', type: 'c', count: -1 }), 'tail: illegal offset -- -1');
   });
 });
 

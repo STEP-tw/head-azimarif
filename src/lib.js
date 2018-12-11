@@ -84,17 +84,17 @@ const isCountAboveZero = function(count) {
   return (isGreaterThanZero(count) && isValueNumber(count));
 }
 
-const selectHeadOperation = function(headOption) {
-  let options = {
+const selectOperation = function(headOption) {
+  let type = {
     'n': getFirstNLines,
     'c': getFirstNBytes
   }
-  return options[headOption];
+  return type[headOption];
 }
 
 const head = function(fileDetails, headParameters) {
   let { type, count } = headParameters;
-  let headOperation = selectHeadOperation(type);
+  let headOperation = selectOperation(type);
   let delimiter='';
   return fileDetails.map((fileDetail)=>{
     if(fileDetail.isExists) {
@@ -113,7 +113,7 @@ const head = function(fileDetails, headParameters) {
 const tail = function(fileDetails, tailParameters) {
   let type = tailParameters.type;
   let count = Math.abs(tailParameters.count);
-  let tailOperation = selectHeadOperation(type);
+  let tailOperation = selectOperation(type);
   let delimiter='';
   return fileDetails.map((fileDetail)=>{
     if(fileDetail.isExists) {
@@ -147,6 +147,6 @@ module.exports = {
   isCountAboveZero,
   invalidCountMessage,
   displayUsage,
-  selectHeadOperation,
+  selectOperation,
   runTail
 }

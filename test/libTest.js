@@ -5,7 +5,7 @@ const {
   invalidCountMessage,
   displayUsage,
   head,
-  selectHeadOperation
+  selectOperation
 } = require('../src/lib.js');
 const {
   deepEqual
@@ -152,16 +152,16 @@ describe('head', () => {
   });
 });
 
-describe('selectHeadOperation', () => {
+describe('selectOperation', () => {
   it('should return getFirstNLines function when option is n', () => {
-    deepEqual(selectHeadOperation('n'), getFirstNLines);
+    deepEqual(selectOperation('n'), getFirstNLines);
   });
 
   it('should return getFirstNBytes function when option is c', () => {
-    deepEqual(selectHeadOperation('c'), getFirstNBytes);
+    deepEqual(selectOperation('c'), getFirstNBytes);
   });
  
   it('should return undefined when option is other than n or c', () => {
-    deepEqual(selectHeadOperation('o'), undefined);
+    deepEqual(selectOperation('o'), undefined);
   });
 });

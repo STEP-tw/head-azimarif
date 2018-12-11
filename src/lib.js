@@ -23,11 +23,11 @@ const runHead = function(fs, inputArgs) {
   } = headParameters;
 
   if(type != 'n' && type != 'c') {
-    return displayHeadUsage(type);
+    return displayUsage('head', type);
   }
 
   if(!isCountAboveZero(count)) {
-    return invalidCountMessage(type, count);
+    return invalidCountMessage(type, count, '');
   }
 
   let fileDetails = files.map((file)=> getFileDetails(fs,file));
@@ -43,7 +43,7 @@ const runTail = function(fs, inputArgs) {
   } = tailParameters;
 
   if(type != 'n' && type != 'c') {
-    return displayTailUsage(type);
+    return displayUsage('tail', type);
   }
 
   if(!isValueNumber(count)) {
@@ -54,14 +54,14 @@ const runTail = function(fs, inputArgs) {
   return tail(fileDetails, tailParameters);
 }
 
-const displayHeadUsage = function (type) {
-  return "head: illegal option -- " + type + 
-    "\nusage: head [-n lines | -c bytes] [file ...]";
-}
-
-const displayTailUsage = function (type) {
-  return 'tail: illegal option -- ' + type +
-    'usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
+const displayUsage = function (option, type) {
+  let usageMessage = {
+    head: 'head: illegal option -- ' + type + 
+    '\nusage: head [-n lines | -c bytes] [file ...]',
+    tail: 'tail: illegal option -- ' + type +
+    '\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]'
+  };
+  return usageMessage[option];
 }
 
 const invalidCountMessage = function(type, count) {
@@ -143,8 +143,7 @@ module.exports = {
   getFirstNBytes,
   isCountAboveZero,
   invalidCountMessage,
-  displayHeadUsage,
+  displayUsage,
   selectHeadOperation,
-  runTail,
-  displayTailUsage
+  runTail
 }

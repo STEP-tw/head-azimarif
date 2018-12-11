@@ -3,7 +3,7 @@ const {
   getFirstNBytes,
   isCountAboveZero,
   invalidCountMessage,
-  displayHeadUsage,
+  displayUsage,
   head,
   selectHeadOperation,
   displayTailUsage
@@ -69,12 +69,12 @@ describe('invalidCountMessage', () => {
   });
 });
 
-describe('displayHeadUsage', () => {
-  it('should return usage message with type', () => {
-    deepEqual(displayHeadUsage('p'), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
+describe('displayUsage', () => {
+  it('should return head usage message with type', () => {
+    deepEqual(displayUsage('head', 'p'), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
   });
-  it('should return usage message with type', () => {
-    deepEqual(displayHeadUsage('-'), 'head: illegal option -- -\nusage: head [-n lines | -c bytes] [file ...]');
+  it('should return tail usage message with type', () => {
+    deepEqual(displayUsage('tail', '-'), 'tail: illegal option -- -\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
   });
 });
 
@@ -155,14 +155,5 @@ describe('selectHeadOperation', () => {
  
   it('should return undefined when option is other than n or c', () => {
     deepEqual(selectHeadOperation('o'), undefined);
-  });
-});
-
-describe('displayTailUsage', () => {
-  it('should return usage message with type', () => {
-    deepEqual(displayTailUsage('p'), 'tail: illegal option -- pusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
-  });
-  it('should return usage message with type', () => {
-    deepEqual(displayTailUsage('-'), 'tail: illegal option -- -usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
   });
 });

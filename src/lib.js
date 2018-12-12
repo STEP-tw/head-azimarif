@@ -50,6 +50,7 @@ const runTail = function(fs, inputArgs) {
   }
 
   let fileDetails = tailParameters.files.map(file => getFileDetailsInReverse(fs, file));
+  tailParameters.count = Math.abs(tailParameters.count);
   return tail(fileDetails, tailParameters);
 };
 
@@ -96,8 +97,7 @@ const head = function(fileDetails, headParameters) {
   let { type, count } = headParameters;
   let headOperation = selectOperation(type);
   let delimiter = "";
-  return fileDetails
-    .map(fileDetail => {
+  return fileDetails.map(fileDetail => {
       if (fileDetail.isExists) {
         let currentHeadFile = "";
         if (fileDetails.length > 1) {
@@ -108,31 +108,25 @@ const head = function(fileDetails, headParameters) {
         return currentHeadFile;
       }
       return fileDetail.errorMessage;
-    })
-    .join("\n");
+    }).join("\n");
 };
 
 const tail = function(fileDetails, tailParameters) {
-  let type = tailParameters.type;
-  let count = Math.abs(tailParameters.count);
+  let { type, count } = tailParameters;
   let tailOperation = selectOperation(type);
   let delimiter = "";
-  return fileDetails
-    .map(fileDetail => {
+  return fileDetails.map(fileDetail => {
       if (fileDetail.isExists) {
         let currentTailFile = "";
         if (fileDetails.length > 1) {
           currentTailFile = delimiter + getFileHeading(fileDetail.name);
           delimiter = "\n";
         }
-        currentTailFile += reverseText(
-          tailOperation(fileDetail.content, count)
-        );
+        currentTailFile += reverseText(tailOperation(fileDetail.content, count));
         return currentTailFile;
       }
       return fileDetail.errorMessage;
-    })
-    .join("\n");
+    }).join("\n");
 };
 
 const getFirstNLines = function(content, count) {

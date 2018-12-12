@@ -148,5 +148,6 @@ module.exports = {
   invalidCountMessage,
   displayUsage,
   selectOperation,
-  runTail
+  runTail,
+  tail
 };

@@ -168,5 +168,8 @@ describe('runTail', () => {
     it('should return usage message when option other than n or c is given', () => {
       deepEqual(runTail(fs, ['-p', '0', 'file1']), 'tail: illegal option -- p\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
     });
+    it("should return error message when count is less than 1 or not a number", () => {
+      deepEqual(runTail(fs, ["-n", "p", "file1"]), 'tail: illegal offset -- p');
+    });
   });
 });

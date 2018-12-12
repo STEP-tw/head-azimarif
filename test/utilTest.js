@@ -1,6 +1,6 @@
 const {
   isNumberGreater,
-  isValueNumber,
+  isNaturalNumber,
   reverseText
 } = require("../src/util.js");
 
@@ -22,17 +22,17 @@ describe("isNumberGreater", () => {
   });
 });
 
-describe("isValueNumber", () => {
+describe("isNaturalNumber", () => {
   it("should return true when value is an int", () => {
-    equal(isValueNumber(0), true);
+    equal(isNaturalNumber(0), true);
   });
 
   it("should return false when value is not an int", () => {
-    equal(isValueNumber("a"), false);
+    equal(isNaturalNumber("a"), false);
   });
 
   it("should return false when value is some special character", () => {
-    equal(isValueNumber("-"), false);
+    equal(isNaturalNumber("-"), false);
   });
 });
 

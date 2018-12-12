@@ -10,7 +10,7 @@ const parseInput = function(arguments) {
 }
 
 const getHeadParameters = function(headParameters){
-  if(headParameters[0] == '-n' || headParameters[0] == '-c'){
+  if(isValidOption(headParameters[0])){
     return {
       type : headParameters[0][1],
       count : headParameters[1],
@@ -31,6 +31,10 @@ const getHeadParameters = function(headParameters){
     count : headParameters[0].slice(2),
     files : headParameters.slice(1)
   };
+}
+
+const isValidOption = function(option) {
+  return option == '-n' || option == '-c';
 }
 
 module.exports = {

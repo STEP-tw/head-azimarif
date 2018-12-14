@@ -1,7 +1,8 @@
 const {
   isNumberGreater,
   isNaturalNumber,
-  reverseText
+  reverseText,
+  identity
 } = require("../src/util.js");
 
 const { equal } = require("assert");
@@ -43,5 +44,15 @@ describe("reverseText", () => {
 
   it("should return string in reverse order", () => {
     equal(reverseText('End'), 'dnE');
+  });
+});
+
+describe("identity", () => {
+  it("should return empty string when input is empty", () => {
+    equal(identity(''), '');
+  });
+
+  it("should return string as it is", () => {
+    equal(identity('End'), 'End');
   });
 });

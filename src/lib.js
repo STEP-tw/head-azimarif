@@ -142,4 +142,5 @@ module.exports = {
   displayUsage,
   selectOperation,
   runTail,
+  runCommand
 };

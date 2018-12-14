@@ -93,17 +93,17 @@ const selectFileContentOrder = function (option) {
   return type[option];
 }
 
-const runCommand = function (fileDetails, headParameters) {
-  let { type, count, option } = headParameters;
+const runCommand = function (fileDetails, commandValues) {
+  let { type, count, option } = commandValues;
   let commandOperation = selectOperation(type);
   let numberOfFiles = fileDetails.length;
   let fileContentOrder = selectFileContentOrder(option);
   return fileDetails.map((fileDetail) => {
-    let commandValues = {
+    let fileFormatDetails = {
       fileDetail, commandOperation, count, numberOfFiles,
       fileContentOrder
     };
-    return getFormattedFileContent(commandValues);
+    return getFormattedFileContent(fileFormatDetails);
   }).join('\n\n');
 };
 

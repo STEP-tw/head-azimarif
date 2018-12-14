@@ -327,7 +327,7 @@ describe('runCommand', () => {
 
     describe('error message and usage', () => {
       it('should return error message when count is less than 1 or not a number', () => {
-        deepEqual(runTail(fs, ['-n', '0', 'file1']), 'tail: illegal offset -- 0');
+        deepEqual(runTail(fs, ['-n', '0', 'file1']), '');
       });
       it('should return usage message when option other than n or c is given', () => {
         deepEqual(runTail(fs, ['-p', '0', 'file1']), 'tail: illegal option -- p\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');

@@ -2,7 +2,7 @@ const { parseInput } = require("./headInputLib.js");
 
 const {
   isNumberGreater,
-  isNaturalNumber,
+  isValueString,
   reverseText,
   identity
 } = require("../src/util.js");
@@ -37,7 +37,7 @@ const runTail = function(fs, inputArgs) {
     return displayUsage(tailParameters);
   }
 
-  if (!isNaturalNumber(tailParameters.count)) {
+  if (isValueString(tailParameters.count)) {
     return invalidCountMessage(tailParameters);
   }
 
@@ -74,7 +74,7 @@ const invalidCountMessage = function(messageParameters) {
 
 const isCountAboveZero = function(count) {
   let isGreaterThanZero = isNumberGreater(0);
-  return isGreaterThanZero(count) && isNaturalNumber(count);
+  return isGreaterThanZero(count) && !isValueString(count);
 };
 
 const selectOperation = function(headOption) {

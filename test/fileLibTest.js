@@ -1,6 +1,6 @@
 const {
   getFileHeading,
-  fileNotFound,
+  displayFileNotFoundError,
   getFileDetails,
   getFileDetailsInReverse
 } = require('../src/fileLib.js');
@@ -19,15 +19,15 @@ describe('getFileHeading', () => {
   });
 });
 
-describe('fileNotFound', () => {
+describe('displayFileNotFoundError', () => {
   it('should return file not found message with file name', () => {
-    deepEqual(fileNotFound('myFile.txt', true), 'head: myFile.txt: No such file or directory');
-    deepEqual(fileNotFound('123.txt', true), 'head: 123.txt: No such file or directory');
+    deepEqual(displayFileNotFoundError('myFile.txt', 'head'), 'head: myFile.txt: No such file or directory');
+    deepEqual(displayFileNotFoundError('123.txt', 'head'), 'head: 123.txt: No such file or directory');
   });
 
   it('should return file not found message with file name', () => {
-    deepEqual(fileNotFound('myFile.txt', false), 'tail: myFile.txt: No such file or directory');
-    deepEqual(fileNotFound('123.txt', false), 'tail: 123.txt: No such file or directory');
+    deepEqual(displayFileNotFoundError('myFile.txt', 'tail'), 'tail: myFile.txt: No such file or directory');
+    deepEqual(displayFileNotFoundError('123.txt', 'tail'), 'tail: 123.txt: No such file or directory');
   });
 });
 

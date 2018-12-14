@@ -2,12 +2,8 @@ const {
   reverseText
 } = require('../src/util.js');
 
-const fileNotFound = function(file, isHead) {
-  let option = {
-    true : 'head',
-    false : 'tail'
-  };
-  return option[isHead] + ": " + file + ": No such file or directory"; 
+const displayFileNotFoundError = function(file, option) {
+  return option + ": " + file + ": No such file or directory"; 
 };
 
 const getFileHeading = function(file) {
@@ -23,7 +19,7 @@ const getFileDetails = function(fs, file) {
   };
   if (!isFileExists(fs, file)) {
     fileDetail.isExists = false;
-    fileDetail.errorMessage = fileNotFound(file, true);
+    fileDetail.errorMessage = displayFileNotFoundError(file, 'head');
   }
   return fileDetail;
 };
@@ -34,7 +30,7 @@ const getFileDetailsInReverse = function(fs, file) {
     fileDetail.content = reverseText(fileDetail.content);
     return fileDetail;
   }
-  fileDetail.errorMessage = fileNotFound(file, false);
+  fileDetail.errorMessage = displayFileNotFoundError(file, 'tail');
   return fileDetail;
 };
 
@@ -50,7 +46,7 @@ const isFileExists = function(fs, file) {
 
 module.exports = {
   getFileHeading,
-  fileNotFound,
+  displayFileNotFoundError,
   getFileDetails,
   readFile,
   isFileExists,

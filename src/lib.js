@@ -124,8 +124,8 @@ const getFormattedFileContent = function (fileFormatDetails) {
 }
 
 const getFirstNLines = function(content, count) {
-  content = content.split("\n");
-  return content.slice(0, count).join("\n");
+  let contentArray = content.split("\n");
+  return contentArray.slice(0, count).join("\n");
 };
 
 const getFirstNBytes = function(content, count) {

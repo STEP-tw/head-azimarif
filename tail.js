@@ -15,12 +15,11 @@
 */
 
 const fs = require('fs');
-const {
-  runTail
-} = require('./src/lib.js');
+
+const { tail } = require("./src/lib.js");
 
 const main = function() {
-  let headResult = runTail(fs, process.argv.slice(2));
+  let headResult = tail(fs, process.argv.slice(2));
   console.log(headResult);
 };
 

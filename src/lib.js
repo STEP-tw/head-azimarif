@@ -107,9 +107,9 @@ const runCommand = function (fileDetails, commandValues) {
   }).join('\n\n');
 };
 
-const getFormattedFileContent = function (commandValues) {
+const getFormattedFileContent = function (fileFormatDetails) {
   let { fileDetail, commandOperation, count,
-    numberOfFiles, fileContentOrder } = commandValues;
+    numberOfFiles, fileContentOrder } = fileFormatDetails;
   if (fileDetail.isExists) {
     let filteredFileContent = '';
     if (numberOfFiles == 1) {

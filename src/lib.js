@@ -13,7 +13,7 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
-const runHead = function(fs, inputArgs) {
+const head = function(fs, inputArgs) {
   let headParameters = parseInput(inputArgs);
   headParameters.option = 'head';
 
@@ -134,7 +134,7 @@ const getFirstNBytes = function(content, count) {
 };
 
 module.exports = {
-  runHead,
+  head,
   getFirstNLines,
   getFirstNBytes,
   isCountAboveZero,

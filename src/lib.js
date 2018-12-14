@@ -142,5 +142,6 @@ module.exports = {
   displayUsage,
   selectOperation,
   tail,
-  runCommand
+  runCommand,
+  selectFileContentOrder
 };

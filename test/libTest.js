@@ -7,8 +7,11 @@ const {
   runCommand,
   selectOperation,
   head,
-  tail
+  tail,
+  selectFileContentOrder
 } = require('../src/lib.js');
+
+const { identity, reverseText } = require('../src/util.js');
 
 const { deepEqual } = require("assert");
 
@@ -336,5 +339,14 @@ describe('runCommand', () => {
         deepEqual(tail(fs, ["-n", "p", "file1"]), 'tail: illegal offset -- p');
       });
     });
+  });
+});
+
+describe('selectFileContentOrder', () => {
+  it('should return error message when count is less than 1 or not a number', () => {
+    deepEqual(selectFileContentOrder('head'), identity);
+  });
+  it('should return usage message when option other than n or c is given', () => {
+    deepEqual(selectFileContentOrder('tail'), reverseText);
   });
 });

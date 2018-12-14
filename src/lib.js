@@ -29,7 +29,7 @@ const head = function(fs, inputArgs) {
   return runCommand(fileDetails, headParameters);
 };
 
-const runTail = function(fs, inputArgs) {
+const tail = function(fs, inputArgs) {
   let tailParameters = parseInput(inputArgs);
   tailParameters.option = 'tail';
 
@@ -141,6 +141,6 @@ module.exports = {
   invalidCountMessage,
   displayUsage,
   selectOperation,
-  runTail,
+  tail,
   runCommand
 };

@@ -129,8 +129,8 @@ const getFirstNLines = function(content, count) {
 };
 
 const getFirstNBytes = function(content, count) {
-  content = content.split("");
-  return content.slice(0, count).join("");
+  let contentArray = content.split("");
+  return contentArray.slice(0, count).join("");
 };
 
 module.exports = {

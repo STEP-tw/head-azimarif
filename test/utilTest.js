@@ -24,7 +24,7 @@ describe("isNumberGreater", () => {
 
 describe("isNaturalNumber", () => {
   it("should return true when value is an int", () => {
-    equal(isNaturalNumber(0), true);
+    equal(isNaturalNumber(0), false);
   });
 
   it("should return false when value is not an int", () => {

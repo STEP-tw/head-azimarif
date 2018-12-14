@@ -5,7 +5,8 @@ const isNumberGreater = function(number) {
 }
 
 const isNaturalNumber = function(value) {
-  return !isNaN(value);
+  let isGreaterThanZero = isNumberGreater(0);
+  return !isNaN(value) && isGreaterThanZero(value);
 }
 
 const reverseText = function(text) {

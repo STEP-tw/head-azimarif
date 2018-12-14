@@ -15,44 +15,35 @@ const {
 
 const runHead = function(fs, inputArgs) {
   let headParameters = parseInput(inputArgs);
-
-  let messageParameters = {
-    type: headParameters.type,
-    count: headParameters.count,
-    option: 'head'
-  };
+  headParameters.option = 'head';
 
   if (headParameters.type != 'n' && headParameters.type != 'c') {
-    return displayUsage(messageParameters);
+    return displayUsage(headParameters);
   }
 
   if (!isCountAboveZero(headParameters.count)) {
-    return invalidCountMessage(messageParameters);
+    return invalidCountMessage(headParameters);
   }
 
   let fileDetails = headParameters.files.map(file => getFileDetails(fs, file));
-  return head(fileDetails, headParameters);
+  return runCommand(fileDetails, headParameters);
 };
 
 const runTail = function(fs, inputArgs) {
   let tailParameters = parseInput(inputArgs);
-  let messageParameters = {
-    type: tailParameters.type,
-    count: tailParameters.count,
-    option: 'tail'
-  };
+  tailParameters.option = 'tail';
 
   if (tailParameters.type != 'n' && tailParameters.type != 'c') {
-    return displayUsage(messageParameters);
+    return displayUsage(tailParameters);
   }
 
   if (!isNaturalNumber(tailParameters.count)) {
-    return invalidCountMessage(messageParameters);
+    return invalidCountMessage(tailParameters);
   }
 
   let fileDetails = tailParameters.files.map(file => getFileDetailsInReverse(fs, file));
   tailParameters.count = Math.abs(tailParameters.count);
-  return tail(fileDetails, tailParameters);
+  return runCommand(fileDetails, tailParameters);
 };
 
 const displayUsage = function(messageParameters) {
@@ -94,14 +85,23 @@ const selectOperation = function(headOption) {
   return type[headOption];
 };
 
-const head = function (fileDetails, headParameters) {
-  let { type, count } = headParameters;
+const selectFileContentOrder = function (option) {
+  let type = {
+    head: identity,
+    tail: reverseText
+  }
+  return type[option];
+}
+
+const runCommand = function (fileDetails, headParameters) {
+  let { type, count, option } = headParameters;
   let commandOperation = selectOperation(type);
   let numberOfFiles = fileDetails.length;
+  let fileContentOrder = selectFileContentOrder(option);
   return fileDetails.map((fileDetail) => {
     let commandValues = {
       fileDetail, commandOperation, count, numberOfFiles,
-      fileContentOrder: identity
+      fileContentOrder
     };
     return getFormattedFileContent(commandValues);
   }).join('\n\n');
@@ -123,19 +123,6 @@ const getFormattedFileContent = function (commandValues) {
   return fileDetail.errorMessage;
 }
 
-const tail = function (fileDetails, tailParameters) {
-  let { type, count } = tailParameters;
-  let commandOperation = selectOperation(type);
-  let numberOfFiles = fileDetails.length;
-  return fileDetails.map((fileDetail) => {
-    let commandValues = {
-      fileDetail, commandOperation, count,
-      numberOfFiles, fileContentOrder: reverseText
-    };
-    return getFormattedFileContent(commandValues);
-  }).join('\n\n');
-};
-
 const getFirstNLines = function(content, count) {
   content = content.split("\n");
   return content.slice(0, count).join("\n");
@@ -148,7 +135,6 @@ const getFirstNBytes = function(content, count) {
 
 module.exports = {
   runHead,
-  head,
   getFirstNLines,
   getFirstNBytes,
   isCountAboveZero,
@@ -156,5 +142,4 @@ module.exports = {
   displayUsage,
   selectOperation,
   runTail,
-  tail
 };

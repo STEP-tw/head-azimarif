@@ -12,8 +12,13 @@ const reverseText = function(text) {
   return text.split('').reverse().join('');
 }
 
+const identity = function (data) {
+  return data;
+}
+
 module.exports = {
   isNumberGreater,
   isNaturalNumber,
-  reverseText
+  reverseText,
+  identity
 }

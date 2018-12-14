@@ -3,7 +3,8 @@ const { parseInput } = require("./headInputLib.js");
 const {
   isNumberGreater,
   isNaturalNumber,
-  reverseText
+  reverseText,
+  identity
 } = require("../src/util.js");
 
 const {
@@ -93,40 +94,46 @@ const selectOperation = function(headOption) {
   return type[headOption];
 };
 
-const head = function(fileDetails, headParameters) {
+const head = function (fileDetails, headParameters) {
   let { type, count } = headParameters;
-  let headOperation = selectOperation(type);
-  let delimiter = "";
-  return fileDetails.map(fileDetail => {
-      if (fileDetail.isExists) {
-        let currentHeadFile = "";
-        if (fileDetails.length > 1) {
-          currentHeadFile = delimiter + getFileHeading(fileDetail.name);
-          delimiter = "\n";
-        }
-        currentHeadFile += headOperation(fileDetail.content, count);
-        return currentHeadFile;
-      }
-      return fileDetail.errorMessage;
-    }).join("\n");
+  let commandOperation = selectOperation(type);
+  let numberOfFiles = fileDetails.length;
+  return fileDetails.map((fileDetail) => {
+    let commandValues = {
+      fileDetail, commandOperation, count, numberOfFiles,
+      contentOrder: identity
+    };
+    return runCommand(commandValues);
+  }).join('\n\n');
 };
 
-const tail = function(fileDetails, tailParameters) {
+const runCommand = function (commandValues) {
+  let { fileDetail, commandOperation, count,
+    numberOfFiles, contentOrder } = commandValues;
+  if (fileDetail.isExists) {
+    let filteredFileContent = '';
+    if (numberOfFiles == 1) {
+      filteredFileContent = contentOrder(commandOperation(fileDetail.content, count));
+      return filteredFileContent;
+    }
+    filteredFileContent = getFileHeading(fileDetail.name);
+    filteredFileContent += contentOrder(commandOperation(fileDetail.content, count));
+    return filteredFileContent;
+  }
+  return fileDetail.errorMessage;
+}
+
+const tail = function (fileDetails, tailParameters) {
   let { type, count } = tailParameters;
-  let tailOperation = selectOperation(type);
-  let delimiter = "";
-  return fileDetails.map(fileDetail => {
-      if (fileDetail.isExists) {
-        let currentTailFile = "";
-        if (fileDetails.length > 1) {
-          currentTailFile = delimiter + getFileHeading(fileDetail.name);
-          delimiter = "\n";
-        }
-        currentTailFile += reverseText(tailOperation(fileDetail.content, count));
-        return currentTailFile;
-      }
-      return fileDetail.errorMessage;
-    }).join("\n");
+  let commandOperation = selectOperation(type);
+  let numberOfFiles = fileDetails.length;
+  return fileDetails.map((fileDetail) => {
+    let commandValues = {
+      fileDetail, commandOperation, count,
+      numberOfFiles, contentOrder: reverseText
+    };
+    return runCommand(commandValues);
+  }).join('\n\n');
 };
 
 const getFirstNLines = function(content, count) {

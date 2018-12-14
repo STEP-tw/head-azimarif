@@ -1,4 +1,5 @@
 ### Head Usage:
+  ```
   1.  node ./head.js file1
   2.  node ./head.js -n5 file1
   3.  node ./head.js -n 5 file1
@@ -11,8 +12,10 @@
   10. node ./head.js -c 5 file1
   11. node ./head.js -c5 file1 file2
   12. node ./head.js -c 5 file1 file2
+  ```
 
  ### Tail Usage:
+  ```
   1.  node ./tail.js file1
   2.  node ./tail.js -n5 file1
   3.  node ./tail.js -n 5 file1
@@ -25,3 +28,4 @@
   10. node ./tail.js -c 5 file1
   11. node ./tail.js -c5 file1 file2
   12. node ./tail.js -c 5 file1 file2
+  ```

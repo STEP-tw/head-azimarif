@@ -1,10 +1,9 @@
 const fs = require('fs');
-const {
-  runHead
-} = require('./src/lib.js');
+
+const { head } = require("./src/lib.js");
 
 const main = function() {
-  let headResult = runHead(fs, process.argv.slice(2));
+  let headResult = head(fs, process.argv.slice(2));
   console.log(headResult);
 };
 

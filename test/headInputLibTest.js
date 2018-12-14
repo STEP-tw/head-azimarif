@@ -1,7 +1,7 @@
 const {
   parseInput,
   getHeadParameters
-} = require('../src/headInputLib.js');
+} = require('../src/inputLib.js');
 const {
   deepEqual
 } = require('assert');

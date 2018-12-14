@@ -4,13 +4,8 @@ const {
   getFileDetails,
   getFileDetailsInReverse
 } = require('../src/fileLib.js');
-const {
-  runHead,
-  runTail
-} = require('../src/lib.js');
-const {
-  deepEqual
-} = require('assert');
+
+const { deepEqual } = require("assert");
 
 describe('getFileHeading', () => {
   it('should return the fileName with heading', () => {

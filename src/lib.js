@@ -101,23 +101,23 @@ const head = function (fileDetails, headParameters) {
   return fileDetails.map((fileDetail) => {
     let commandValues = {
       fileDetail, commandOperation, count, numberOfFiles,
-      contentOrder: identity
+      fileContentOrder: identity
     };
-    return runCommand(commandValues);
+    return getFormattedFileContent(commandValues);
   }).join('\n\n');
 };
 
-const runCommand = function (commandValues) {
+const getFormattedFileContent = function (commandValues) {
   let { fileDetail, commandOperation, count,
-    numberOfFiles, contentOrder } = commandValues;
+    numberOfFiles, fileContentOrder } = commandValues;
   if (fileDetail.isExists) {
     let filteredFileContent = '';
     if (numberOfFiles == 1) {
-      filteredFileContent = contentOrder(commandOperation(fileDetail.content, count));
+      filteredFileContent = fileContentOrder(commandOperation(fileDetail.content, count));
       return filteredFileContent;
     }
     filteredFileContent = getFileHeading(fileDetail.name);
-    filteredFileContent += contentOrder(commandOperation(fileDetail.content, count));
+    filteredFileContent += fileContentOrder(commandOperation(fileDetail.content, count));
     return filteredFileContent;
   }
   return fileDetail.errorMessage;
@@ -130,9 +130,9 @@ const tail = function (fileDetails, tailParameters) {
   return fileDetails.map((fileDetail) => {
     let commandValues = {
       fileDetail, commandOperation, count,
-      numberOfFiles, contentOrder: reverseText
+      numberOfFiles, fileContentOrder: reverseText
     };
-    return runCommand(commandValues);
+    return getFormattedFileContent(commandValues);
   }).join('\n\n');
 };
 

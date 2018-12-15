@@ -13,11 +13,15 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
+const isInvalidType = function(type) {
+  return type != 'n' && type != 'c';
+}
+
 const head = function(fs, inputArgs) {
   let headParameters = parseInput(inputArgs);
   headParameters.option = 'head';
 
-  if (headParameters.type != 'n' && headParameters.type != 'c') {
+  if (isInvalidType(headParameters.type)) {
     return displayUsage(headParameters);
   }
 

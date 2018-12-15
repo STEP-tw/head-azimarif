@@ -37,7 +37,7 @@ const tail = function(fs, inputArgs) {
   let tailParameters = parseInput(inputArgs);
   tailParameters.option = 'tail';
 
-  if (tailParameters.type != 'n' && tailParameters.type != 'c') {
+  if (isInvalidType(tailParameters.type)) {
     return displayUsage(tailParameters);
   }
 

@@ -85,12 +85,12 @@ const selectOperation = function(headOption) {
   return type[headOption];
 };
 
-const selectFileContentOrder = function (option) {
-  let type = {
+const selectFileContentOrder = function (currentOption) {
+  let option = {
     head: identity,
     tail: reverseText
   }
-  return type[option];
+  return option[currentOption];
 }
 
 const runCommand = function (fileDetails, commandValues) {

@@ -34,14 +34,21 @@ describe('parseInput', () => {
 });
 
 describe('getOptionDetails', () => {
-  it('should return an object of type, count and fileNames when all three arguments are passed', () => {
-    deepEqual(getOptionDetails(['-n1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
-    deepEqual(getOptionDetails(['-n1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(getOptionDetails(['-n', '1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
-    deepEqual(getOptionDetails(['-n', '1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(getOptionDetails(['-c1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
-    deepEqual(getOptionDetails(['-c1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
-    deepEqual(getOptionDetails(['-c', '1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
-    deepEqual(getOptionDetails(['-c', '1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
+  it('n option', () => {
+    it('should return an object of type, count and fileNames when all three arguments are passed', () => {
+      deepEqual(getOptionDetails(['-n1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
+      deepEqual(getOptionDetails(['-n1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
+      deepEqual(getOptionDetails(['-n', '1', 'file1.txt']), { type: 'n', count: 1, files: ['file1.txt'] });
+      deepEqual(getOptionDetails(['-n', '1', 'file1.txt', 'file2.txt']), { type: 'n', count: 1, files: ['file1.txt', 'file2.txt'] });
+    });
+  });
+  it('c option', () => {
+    it('should return an object of type, count and fileNames when all three arguments are passed', () => {
+
+      deepEqual(getOptionDetails(['-c1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
+      deepEqual(getOptionDetails(['-c1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
+      deepEqual(getOptionDetails(['-c', '1', 'file1.txt']), { type: 'c', count: 1, files: ['file1.txt'] });
+      deepEqual(getOptionDetails(['-c', '1', 'file1.txt', 'file2.txt']), { type: 'c', count: 1, files: ['file1.txt', 'file2.txt'] });
+    });
   });
 });

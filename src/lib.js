@@ -147,5 +147,6 @@ module.exports = {
   selectOperation,
   tail,
   runCommand,
-  selectFileContentOrder
+  selectFileContentOrder,
+  isInvalidType
 };

@@ -5,24 +5,24 @@ const {
   getFileDetailsInReverse
 } = require('../src/fileLib.js');
 
-const { deepEqual } = require("assert");
+const assert = require("assert");
 
 describe('getFileHeading', () => {
   it('should return the fileName with heading', () => {
     let file = 'myFile.txt'
-    deepEqual(getFileHeading(file), '==> '+ file +' <==\n');
+    assert.deepEqual(getFileHeading(file), '==> '+ file +' <==\n');
   });
 });
 
 describe('displayFileNotFoundError', () => {
   it('should return file not found message with file name', () => {
-    deepEqual(displayFileNotFoundError('myFile.txt', 'head'), 'head: myFile.txt: No such file or directory');
-    deepEqual(displayFileNotFoundError('123.txt', 'head'), 'head: 123.txt: No such file or directory');
+    assert.deepEqual(displayFileNotFoundError('myFile.txt', 'head'), 'head: myFile.txt: No such file or directory');
+    assert.deepEqual(displayFileNotFoundError('123.txt', 'head'), 'head: 123.txt: No such file or directory');
   });
 
   it('should return file not found message with file name', () => {
-    deepEqual(displayFileNotFoundError('myFile.txt', 'tail'), 'tail: myFile.txt: No such file or directory');
-    deepEqual(displayFileNotFoundError('123.txt', 'tail'), 'tail: 123.txt: No such file or directory');
+    assert.deepEqual(displayFileNotFoundError('myFile.txt', 'tail'), 'tail: myFile.txt: No such file or directory');
+    assert.deepEqual(displayFileNotFoundError('123.txt', 'tail'), 'tail: 123.txt: No such file or directory');
   });
 });
 
@@ -33,10 +33,7 @@ const files = {
 
 const fs = { 
   existsSync : (file)=>{
-    if(files.hasOwnProperty(file)){
-      return true;
-    }
-    return false;
+    return files.hasOwnProperty(file);
   },
   readFileSync : (file)=> {
     return files[file];
@@ -45,7 +42,7 @@ const fs = {
 
 describe('getFileDetails', () => {
   it('should return the content of the file when file exists ', () => {
-    deepEqual(getFileDetails(fs, "file1"), {
+    assert.deepEqual(getFileDetails(fs, "file1"), {
       content: 'This is the content of file 1\nLine 2',
       name: 'file1',
       isExists: true,
@@ -53,7 +50,7 @@ describe('getFileDetails', () => {
     });
   });
   it('should return the error message if the file does not exist ', () => {
-    deepEqual(getFileDetails(fs, "file9"), {
+    assert.deepEqual(getFileDetails(fs, "file9"), {
       content: undefined,
       name: 'file9',
       isExists: false,
@@ -64,7 +61,7 @@ describe('getFileDetails', () => {
 
 describe('getFileDetailsInReverse', () => {
   it('should return the content of the file when file exists ', () => {
-    deepEqual(getFileDetailsInReverse(fs, "file1"), {
+    assert.deepEqual(getFileDetailsInReverse(fs, "file1"), {
       content: '2 eniL\n1 elif fo tnetnoc eht si sihT',
       name: 'file1',
       isExists: true,
@@ -72,7 +69,7 @@ describe('getFileDetailsInReverse', () => {
     });
   });
   it('should return the error message if the file does not exist ', () => {
-    deepEqual(getFileDetailsInReverse(fs, "file9"), {
+    assert.deepEqual(getFileDetailsInReverse(fs, "file9"), {
       content: undefined,
       name: 'file9',
       isExists: false,

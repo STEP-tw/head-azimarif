@@ -1,6 +1,6 @@
 const parseInput = function (arguments) {
   let firstArgument = arguments[0];
-  if (firstArgument[0] == '-') {
+  if (firstArgument.startsWith('-')) {
     return getOptionDetails(arguments);
   }
   return {

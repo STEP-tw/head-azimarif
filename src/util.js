@@ -4,8 +4,8 @@ const isNumberGreater = function(number) {
   }
 }
 
-const isValueString = function(value) {
-  return isNaN(value);
+const isNumber = function(value) {
+  return !isNaN(value);
 }
 
 const reverseText = function(text) {
@@ -18,7 +18,7 @@ const identity = function (data) {
 
 module.exports = {
   isNumberGreater,
-  isValueString,
+  isNumber,
   reverseText,
   identity
 }

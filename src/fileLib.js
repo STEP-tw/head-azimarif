@@ -2,30 +2,30 @@ const {
   reverseText
 } = require('../src/util.js');
 
-const displayFileNotFoundError = function(file, option) {
-  return option + ": " + file + ": No such file or directory"; 
+const displayFileNotFoundError = function(fileName, command) {
+  return command + ": " + fileName + ": No such file or directory"; 
 };
 
-const getFileHeading = function(file) {
-  return "==> " + file + " <==\n";
+const getFileHeading = function(fileName) {
+  return "==> " + fileName + " <==\n";
 };
 
-const getFileDetails = function(fs, file) {
+const getFileDetails = function(file, fs) {
   let fileDetail = {
-    content: readFile(fs, file),
+    content: readFile(file, fs),
     name: file,
     isExists: true,
     errorMessage: ""
   };
-  if (!isFileExists(fs, file)) {
+  if (!isFileExists(file, fs)) {
     fileDetail.isExists = false;
     fileDetail.errorMessage = displayFileNotFoundError(file, 'head');
   }
   return fileDetail;
 };
 
-const getFileDetailsInReverse = function(fs, file) {
-  let fileDetail = getFileDetails(fs, file);
+const getFileDetailsInReverse = function(file, fs) {
+  let fileDetail = getFileDetails(file, fs);
   if (fileDetail.content != undefined) {
     fileDetail.content = reverseText(fileDetail.content);
     return fileDetail;
@@ -34,13 +34,13 @@ const getFileDetailsInReverse = function(fs, file) {
   return fileDetail;
 };
 
-const readFile = function(fs, file) {
-  if (isFileExists(fs, file)) {
+const readFile = function(file, fs) {
+  if (isFileExists(file, fs)) {
     return fs.readFileSync(file, "utf-8");
   }
 };
 
-const isFileExists = function(fs, file) {
+const isFileExists = function(file, fs) {
   return fs.existsSync(file);
 };
 

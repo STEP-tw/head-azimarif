@@ -29,7 +29,7 @@ const head = function(fs, inputArgs) {
     return invalidCountMessage(headParameters);
   }
 
-  let fileDetails = headParameters.files.map(file => getFileDetails(fs, file));
+  let fileDetails = headParameters.files.map(file => getFileDetails(file, fs));
   return runCommand(fileDetails, headParameters);
 };
 
@@ -45,7 +45,7 @@ const tail = function(fs, inputArgs) {
     return invalidCountMessage(tailParameters);
   }
 
-  let fileDetails = tailParameters.files.map(file => getFileDetailsInReverse(fs, file));
+  let fileDetails = tailParameters.files.map(file => getFileDetailsInReverse(file, fs));
   tailParameters.count = Math.abs(tailParameters.count);
   return runCommand(fileDetails, tailParameters);
 };
@@ -63,14 +63,15 @@ const displayUsage = function(messageParameters) {
 
 const invalidCountMessage = function(messageParameters) {
   let { option, type, count } = messageParameters;
+  let invalidOffsetMessage = "tail: illegal offset -- " + count;
   let invalidMessage = {
     head: {
       n: "head: illegal line count -- " + count,
       c: "head: illegal byte count -- " + count
     },
     tail: {
-      n: "tail: illegal offset -- " + count,
-      c: "tail: illegal offset -- " + count
+      n: invalidOffsetMessage,
+      c: invalidOffsetMessage
     }
   };
   return invalidMessage[option][type];

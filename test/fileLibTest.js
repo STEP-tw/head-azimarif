@@ -42,7 +42,7 @@ const fs = {
 
 describe('getFileDetails', () => {
   it('should return the content of the file when file exists ', () => {
-    assert.deepEqual(getFileDetails(fs, "file1"), {
+    assert.deepEqual(getFileDetails("file1", fs), {
       content: 'This is the content of file 1\nLine 2',
       name: 'file1',
       isExists: true,
@@ -50,7 +50,7 @@ describe('getFileDetails', () => {
     });
   });
   it('should return the error message if the file does not exist ', () => {
-    assert.deepEqual(getFileDetails(fs, "file9"), {
+    assert.deepEqual(getFileDetails("file9", fs), {
       content: undefined,
       name: 'file9',
       isExists: false,
@@ -61,7 +61,7 @@ describe('getFileDetails', () => {
 
 describe('getFileDetailsInReverse', () => {
   it('should return the content of the file when file exists ', () => {
-    assert.deepEqual(getFileDetailsInReverse(fs, "file1"), {
+    assert.deepEqual(getFileDetailsInReverse("file1", fs), {
       content: '2 eniL\n1 elif fo tnetnoc eht si sihT',
       name: 'file1',
       isExists: true,
@@ -69,7 +69,7 @@ describe('getFileDetailsInReverse', () => {
     });
   });
   it('should return the error message if the file does not exist ', () => {
-    assert.deepEqual(getFileDetailsInReverse(fs, "file9"), {
+    assert.deepEqual(getFileDetailsInReverse("file9", fs), {
       content: undefined,
       name: 'file9',
       isExists: false,

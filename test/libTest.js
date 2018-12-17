@@ -31,32 +31,32 @@ const fs = {
 }
 
 describe('getFirstNLines', () => {
-  const fileContent = 'One\nTwo\nThree\nFour\nFive\nSix\nSeven\nEight\nNine\nTen';
+  const fileContent = [1,2,3,4,5,6,7,8,9,10].join('\n');
   it('should return 0 line (empty string) when count is 0', () => {
     assert.deepEqual(getFirstNLines(fileContent, 0), '');
   });
 
   it('should return 1 line when count is 1', () => {
-    assert.deepEqual(getFirstNLines(fileContent, 1), 'One');
+    assert.deepEqual(getFirstNLines(fileContent, 1), '1');
   });
 
   it('should return 5 lines  when count is 5', () => {
-    assert.deepEqual(getFirstNLines(fileContent, 5), 'One\nTwo\nThree\nFour\nFive');
+    assert.deepEqual(getFirstNLines(fileContent, 5), '1\n2\n3\n4\n5');
   });
 });
 
 describe('getFirstNBytes', () => {
-  const fileContent = 'One\nTwo\nThree\nFour\nFive\nSix\nSeven\nEight\nNine\nTen';
+  const fileContent = [1,2,3,4,5,6,7,8,9,10].join('\n');
   it('should return 0 byte (empty string) when count is 0', () => {
     assert.deepEqual(getFirstNBytes(fileContent, 0), '');
   });
 
   it('should return 1 byte when count is 1', () => {
-    assert.deepEqual(getFirstNBytes(fileContent, 1), 'O');
+    assert.deepEqual(getFirstNBytes(fileContent, 1), '1');
   });
 
   it('should return 5 bytes  when count is 5', () => {
-    assert.deepEqual(getFirstNBytes(fileContent, 5), 'One\nT');
+    assert.deepEqual(getFirstNBytes(fileContent, 5), '1\n2\n3');
   });
 });
 

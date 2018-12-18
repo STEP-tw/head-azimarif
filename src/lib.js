@@ -63,18 +63,15 @@ const displayUsage = function(messageParameters) {
 
 const invalidCountMessage = function(messageParameters) {
   let { command, option, count } = messageParameters;
-  let invalidOffsetMessage = "tail: illegal offset -- " + count;
+  let optionType = {
+    n: 'line',
+    c: 'byte'
+  }
   let invalidMessage = {
-    head: {
-      n: "head: illegal line count -- " + count,
-      c: "head: illegal byte count -- " + count
-    },
-    tail: {
-      n: invalidOffsetMessage,
-      c: invalidOffsetMessage
-    }
+    head: 'head: illegal ' + optionType[option] + ' count -- ' + count,
+    tail: 'tail: illegal offset -- ' + count
   };
-  return invalidMessage[command][option];
+  return invalidMessage[command];
 };
 
 const isCountAboveZero = function(count) {

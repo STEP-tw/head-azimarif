@@ -116,15 +116,17 @@ const getFormattedFileContent = function (fileFormatDetails) {
   let { fileDetail, commandOperation, count,
     numberOfFiles, fileContentOrder } = fileFormatDetails;
   if (fileDetail.isExists) {
-    let filteredFileContent = '';
-    let fileContent = fileContentOrder(commandOperation(fileDetail.content, count));
-    if (numberOfFiles == 1) {
-      filteredFileContent = fileContent;
-      return filteredFileContent;
+    let requiredFileContent = '';
+    let fileContent = commandOperation(fileDetail.content, count);
+    let actaulFileContent = fileContentOrder(fileContent);
+
+    if (numberOfFiles === 1) {
+      requiredFileContent = actaulFileContent;
+      return requiredFileContent;
     }
-    filteredFileContent = getFileHeading(fileDetail.name);
-    filteredFileContent += fileContent;
-    return filteredFileContent;
+    requiredFileContent = getFileHeading(fileDetail.name);
+    requiredFileContent += actaulFileContent;
+    return requiredFileContent;
   }
   return fileDetail.errorMessage;
 }

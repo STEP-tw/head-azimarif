@@ -22,7 +22,7 @@ const parseInputWithOption = function (inputArgs) {
     };
   }
 
-  if (isInteger(firstArgument)) {
+  if (!isNaN(firstArgument)) {
     return {
       option: 'n',
       count: Math.abs(firstArgument),

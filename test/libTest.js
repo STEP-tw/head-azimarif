@@ -4,8 +4,7 @@ const {
   selectOperation,
   head,
   tail,
-  selectFileContentOrder,
-  isInvalidOption
+  selectFileContentOrder
 } = require('../src/lib.js');
 
 const { identity, reverseText } = require('../src/util.js');
@@ -190,23 +189,5 @@ describe('selectFileContentOrder', () => {
 
   it('should return usage message when option other than n or c is given', () => {
     assert.deepEqual(selectFileContentOrder('tail'), reverseText);
-  });
-});
-
-describe('isInvalidOption', () => {
-  it('should return true when invalid type is given', () => {
-    assert.deepEqual(isInvalidOption('p'), true);
-  });
-
-  it('should return false when valid type is given', () => {
-    assert.deepEqual(isInvalidOption('n'), false);
-  });
-
-  it('should return false when valid type is given', () => {
-    assert.deepEqual(isInvalidOption('c'), false);
-  });
-
-  it('should return true when no type is given', () => {
-    assert.deepEqual(isInvalidOption(''), true);
   });
 });

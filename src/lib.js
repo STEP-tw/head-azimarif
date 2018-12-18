@@ -1,11 +1,6 @@
 const { parseInput } = require("./inputLib.js");
 
-const {
-  isNaturalNumber,
-  isInteger,
-  reverseText,
-  identity
-} = require("../src/util.js");
+const { reverseText, identity } = require("../src/util.js");
 
 const {
   getFileDetails,
@@ -13,22 +8,14 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
-const { displayUsage, invalidCountMessage } = require('./errorLib.js');
+const { validateOptionArgs } = require('./errorLib.js');
 
-const isInvalidOption = function(option) {
-  return option != 'n' && option != 'c';
-}
-
-const head = function(inputArgs, fs) {
+const head = function (inputArgs, fs) {
   let headParameters = parseInput(inputArgs);
   headParameters.command = 'head';
-
-  if (isInvalidOption(headParameters.option)) {
-    return displayUsage(headParameters);
-  }
-
-  if (!isNaturalNumber(headParameters.count)) {
-    return invalidCountMessage(headParameters);
+  let error = validateOptionArgs(headParameters);
+  if (error != '') {
+    return error;
   }
 
   let filesDetail = headParameters.files.map(file => getFileDetails(file, fs));
@@ -39,12 +26,9 @@ const tail = function(inputArgs, fs) {
   let tailParameters = parseInput(inputArgs);
   tailParameters.command = 'tail';
 
-  if (isInvalidOption(tailParameters.option)) {
-    return displayUsage(tailParameters);
-  }
-
-  if (!isInteger(tailParameters.count)) {
-    return invalidCountMessage(tailParameters);
+  let error = validateOptionArgs(tailParameters);
+  if(error != ''){
+    return error;
   }
 
   let filesDetail = tailParameters.files.map(file => getFileDetailsInReverse(file, fs));
@@ -87,14 +71,14 @@ const extractFileContent = function ({ fileDetail, commandOperation, count,
   if (fileDetail.isExists) {
     let requiredFileContent = '';
     let fileContent = commandOperation(fileDetail.content, count);
-    let actaulFileContent = fileContentOrder(fileContent);
+    let fileContentInOrder = fileContentOrder(fileContent);
 
     if (numberOfFiles === 1) {
-      requiredFileContent = actaulFileContent;
+      requiredFileContent = fileContentInOrder;
       return requiredFileContent;
     }
     requiredFileContent = getFileHeading(fileDetail.name);
-    requiredFileContent += actaulFileContent;
+    requiredFileContent += fileContentInOrder;
     return requiredFileContent;
   }
   return fileDetail.errorMessage;
@@ -117,6 +101,5 @@ module.exports = {
   selectOperation,
   tail,
   runCommand,
-  selectFileContentOrder,
-  isInvalidOption
+  selectFileContentOrder
 };

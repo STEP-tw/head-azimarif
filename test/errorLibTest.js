@@ -1,4 +1,8 @@
-const { invalidCountMessage, displayUsage } = require("../src/errorLib.js");
+const { 
+  invalidCountMessage, 
+  displayUsage, 
+  isInvalidOption 
+} = require("../src/errorLib.js");
 
 const assert = require("assert");
 
@@ -55,5 +59,23 @@ describe("displayUsage", () => {
       displayUsage({ command: "tail", option: "-" }),
       expectedOutput
     );
+  });
+});
+
+describe('isInvalidOption', () => {
+  it('should return true when invalid type is given', () => {
+    assert.deepEqual(isInvalidOption('p'), true);
+  });
+
+  it('should return false when valid type is given', () => {
+    assert.deepEqual(isInvalidOption('n'), false);
+  });
+
+  it('should return false when valid type is given', () => {
+    assert.deepEqual(isInvalidOption('c'), false);
+  });
+
+  it('should return true when no type is given', () => {
+    assert.deepEqual(isInvalidOption(''), true);
   });
 });

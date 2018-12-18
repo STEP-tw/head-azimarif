@@ -1,24 +1,24 @@
 const { isNumber } = require('../src/util.js');
 
-const parseInput = function (arguments) {
-  let firstArgument = arguments[0];
+const parseInput = function (inputArgs) {
+  let firstArgument = inputArgs[0];
   if (firstArgument.startsWith('-')) {
-    return getOptionDetails(arguments);
+    return parseInputWithOption(inputArgs);
   }
   return {
     option: 'n',
     count: 10,
-    files: arguments
+    files: inputArgs
   };
 }
 
-const getOptionDetails = function (optionArguments) {
-  let firstArgument = optionArguments[0];
+const parseInputWithOption = function (inputArgs) {
+  let firstArgument = inputArgs[0];
   if (isValidOption(firstArgument)) {
     return {
       option: firstArgument[1],
-      count: optionArguments[1],
-      files: optionArguments.slice(2)
+      count: inputArgs[1],
+      files: inputArgs.slice(2)
     };
   }
 
@@ -26,14 +26,14 @@ const getOptionDetails = function (optionArguments) {
     return {
       option: 'n',
       count: Math.abs(firstArgument),
-      files: optionArguments.slice(1)
+      files: inputArgs.slice(1)
     };
   }
 
   return {
     option: firstArgument[1],
     count: firstArgument.slice(2),
-    files: optionArguments.slice(1)
+    files: inputArgs.slice(1)
   };
 }
 
@@ -43,5 +43,5 @@ const isValidOption = function (option) {
 
 module.exports = {
   parseInput,
-  getOptionDetails
+  parseInputWithOption
 }

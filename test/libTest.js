@@ -17,8 +17,8 @@ const { identity, reverseText } = require('../src/util.js');
 const assert = require("assert");
 
 const files = {
-  'file1': 'This is the content of file 1\nLine 2',
-  'file2': 'This is the content of file 2'
+  file1: [1,2,3,4,5,6,7,8,9,10,11,12,13].join('\n'),
+  file2: [9,8,7,6,5,4,3,2,1,0].join('\n')
 }
 
 const fs = { 
@@ -237,105 +237,105 @@ describe('runCommand', () => {
       });
     });
   });
+});
 
-  describe('selectOperation', () => {
-    it('should return getFirstNLines function when option is n', () => {
-      assert.deepEqual(selectOperation('n'), getFirstNLines);
+describe('selectOperation', () => {
+  it('should return getFirstNLines function when option is n', () => {
+    assert.deepEqual(selectOperation('n'), getFirstNLines);
+  });
+
+  it('should return getFirstNBytes function when option is c', () => {
+    assert.deepEqual(selectOperation('c'), getFirstNBytes);
+  });
+
+  it('should return undefined when option is other than n or c', () => {
+    assert.deepEqual(selectOperation('o'), undefined);
+  });
+});
+
+describe('head', () => {
+  describe('with one file only', () => {
+    it('should return all lines from file when option & count is not given', () => {
+      assert.deepEqual(head(['file1'], fs), '1\n2\n3\n4\n5\n6\n7\n8\n9\n10');
+    });
+    it('should return 1 line from file when option is n & line count is 1', () => {
+      assert.deepEqual(head(['-n', '1', 'file1'], fs), '1');
+    });
+    it('should return 1 byte from file when option is c & byte count is 1', () => {
+      assert.deepEqual(head(['-c', '1', 'file1'], fs), '1');
+    });
+    it('should return error message if file not found', () => {
+      assert.deepEqual(head(['-c', '1', 'myFile'], fs), 'head: myFile: No such file or directory');
     });
 
-    it('should return getFirstNBytes function when option is c', () => {
-      assert.deepEqual(selectOperation('c'), getFirstNBytes);
+  });
+
+  describe('with more than one file', () => {
+    it('should return all lines from file when option & count is not given', () => {
+      assert.deepEqual(head(['file1', 'file2'], fs), '==> file1 <==\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n\n==> file2 <==\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0');
     });
-  
-    it('should return undefined when option is other than n or c', () => {
-      assert.deepEqual(selectOperation('o'), undefined);
+    it('should return 1 line from file when option is n & line count is 1', () => {
+      assert.deepEqual(head(['-n', '1', 'file1', 'file2'], fs), '==> file1 <==\n1\n\n==> file2 <==\n9');
+    });
+    it('should return 1 byte from file when option is c & byte count is 1', () => {
+      assert.deepEqual(head(['-c', '1', 'file1', 'file2'], fs), '==> file1 <==\n1\n\n==> file2 <==\n9');
+    });
+    it('should return error message if file not found', () => {
+      assert.deepEqual(head(['-c', '1', 'myFile', 'myFile2'], fs), 'head: myFile: No such file or directory\n\nhead: myFile2: No such file or directory');
     });
   });
 
-  describe('head', () => {
-    describe('with one file only', () => {
-      it('should return all lines from file when option & count is not given', () => {
-        assert.deepEqual(head(['file1'], fs), 'This is the content of file 1\nLine 2');
-      });
-      it('should return 1 line from file when option is n & line count is 1', () => {
-        assert.deepEqual(head(['-n', '1', 'file1'], fs), 'This is the content of file 1');
-      });
-      it('should return 1 byte from file when option is c & byte count is 1', () => {
-        assert.deepEqual(head(['-c', '1', 'file1'], fs), 'T');
-      });
-      it('should return error message if file not found', () => {
-        assert.deepEqual(head(['-c', '1', 'myFile'], fs), 'head: myFile: No such file or directory');
-      });
+  describe('error message and usage', () => {
+    it('should return error message when count is less than 1 or not a number', () => {
+      assert.deepEqual(head(['-n', '0', 'file1'], fs), 'head: illegal line count -- 0');
+    });
+    it('should return usage message when option other than n or c is given', () => {
+      assert.deepEqual(head(['-p', '0', 'file1'], fs), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
+    });
+  });
+});
 
+describe('tail', () => {
+  describe('with one file only', () => {
+    it('should return all lines from file when option & count is not given', () => {
+      assert.deepEqual(tail(['file1'], fs), '4\n5\n6\n7\n8\n9\n10\n11\n12\n13');
+    });
+    it('should return 1 line from file when option is n & line count is 1', () => {
+      assert.deepEqual(tail(['-n', '1', 'file1'], fs), '13');
+    });
+    it('should return 1 byte from file when option is c & byte count is 1', () => {
+      assert.deepEqual(tail(['-c', '1', 'file1'], fs), '3');
+    });
+    it('should return error message if file not found', () => {
+      assert.deepEqual(tail(['-c', '1', 'myFile'], fs), 'tail: myFile: No such file or directory');
     });
 
-    describe('with more than one file', () => {
-      it('should return all lines from file when option & count is not given', () => {
-        assert.deepEqual(head(['file1', 'file2'], fs), '==> file1 <==\nThis is the content of file 1\nLine 2\n\n==> file2 <==\nThis is the content of file 2');
-      });
-      it('should return 1 line from file when option is n & line count is 1', () => {
-        assert.deepEqual(head(['-n', '1', 'file1', 'file2'], fs), '==> file1 <==\nThis is the content of file 1\n\n==> file2 <==\nThis is the content of file 2');
-      });
-      it('should return 1 byte from file when option is c & byte count is 1', () => {
-        assert.deepEqual(head(['-c', '1', 'file1', 'file2'], fs), '==> file1 <==\nT\n\n==> file2 <==\nT');
-      });
-      it('should return error message if file not found', () => {
-        assert.deepEqual(head(['-c', '1', 'myFile', 'myFile2'], fs), 'head: myFile: No such file or directory\n\nhead: myFile2: No such file or directory');
-      });
-    });
+  });
 
-    describe('error message and usage', () => {
-      it('should return error message when count is less than 1 or not a number', () => {
-        assert.deepEqual(head(['-n', '0', 'file1'], fs), 'head: illegal line count -- 0');
-      });
-      it('should return usage message when option other than n or c is given', () => {
-        assert.deepEqual(head(['-p', '0', 'file1'], fs), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
-      });
+  describe('with more than one file', () => {
+    it('should return all lines from file when option & count is not given', () => {
+      assert.deepEqual(tail(['file1', 'file2'], fs), '==> file1 <==\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n\n==> file2 <==\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0');
+    });
+    it('should return 1 line from file when option is n & line count is 1', () => {
+      assert.deepEqual(tail(['-n', '1', 'file1', 'file2'], fs), '==> file1 <==\n13\n\n==> file2 <==\n0');
+    });
+    it('should return 1 byte from file when option is c & byte count is 1', () => {
+      assert.deepEqual(tail(['-c', '1', 'file1', 'file2'], fs), '==> file1 <==\n3\n\n==> file2 <==\n0');
+    });
+    it('should return error message if file not found', () => {
+      assert.deepEqual(tail(['-c', '1', 'myFile', 'myFile2'], fs), 'tail: myFile: No such file or directory\n\ntail: myFile2: No such file or directory');
     });
   });
 
-  describe('tail', () => {
-    describe('with one file only', () => {
-      it('should return all lines from file when option & count is not given', () => {
-        assert.deepEqual(tail(['file1'], fs), 'This is the content of file 1\nLine 2');
-      });
-      it('should return 1 line from file when option is n & line count is 1', () => {
-        assert.deepEqual(tail(['-n', '1', 'file1'], fs), 'Line 2');
-      });
-      it('should return 1 byte from file when option is c & byte count is 1', () => {
-        assert.deepEqual(tail(['-c', '1', 'file1'], fs), '2');
-      });
-      it('should return error message if file not found', () => {
-        assert.deepEqual(tail(['-c', '1', 'myFile'], fs), 'tail: myFile: No such file or directory');
-      });
-
+  describe('error message and usage', () => {
+    it('should return error message when count is less than 1 or not a number', () => {
+      assert.deepEqual(tail(['-n', '0', 'file1'], fs), '');
     });
-
-    describe('with more than one file', () => {
-      it('should return all lines from file when option & count is not given', () => {
-        assert.deepEqual(tail(['file1', 'file2'], fs), '==> file1 <==\nThis is the content of file 1\nLine 2\n\n==> file2 <==\nThis is the content of file 2');
-      });
-      it('should return 1 line from file when option is n & line count is 1', () => {
-        assert.deepEqual(tail(['-n', '1', 'file1', 'file2'], fs), '==> file1 <==\nLine 2\n\n==> file2 <==\nThis is the content of file 2');
-      });
-      it('should return 1 byte from file when option is c & byte count is 1', () => {
-        assert.deepEqual(tail(['-c', '1', 'file1', 'file2'], fs), '==> file1 <==\n2\n\n==> file2 <==\n2');
-      });
-      it('should return error message if file not found', () => {
-        assert.deepEqual(tail(['-c', '1', 'myFile', 'myFile2'], fs), 'tail: myFile: No such file or directory\n\ntail: myFile2: No such file or directory');
-      });
+    it('should return usage message when option other than n or c is given', () => {
+      assert.deepEqual(tail(['-p', '0', 'file1'], fs), 'tail: illegal option -- p\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
     });
-
-    describe('error message and usage', () => {
-      it('should return error message when count is less than 1 or not a number', () => {
-        assert.deepEqual(tail(['-n', '0', 'file1'], fs), '');
-      });
-      it('should return usage message when option other than n or c is given', () => {
-        assert.deepEqual(tail(['-p', '0', 'file1'], fs), 'tail: illegal option -- p\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
-      });
-      it("should return error message when count is less than 1 or not a number", () => {
-        assert.deepEqual(tail(["-n", "p", "file1"], fs), 'tail: illegal offset -- p');
-      });
+    it("should return error message when count is less than 1 or not a number", () => {
+      assert.deepEqual(tail(["-n", "p", "file1"], fs), 'tail: illegal offset -- p');
     });
   });
 });

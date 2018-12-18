@@ -21,7 +21,7 @@ const head = function(inputArgs, fs) {
   let headParameters = parseInput(inputArgs);
   headParameters.command = 'head';
 
-  if (isInvalidOption(headParameters.type)) {
+  if (isInvalidOption(headParameters.option)) {
     return displayUsage(headParameters);
   }
 
@@ -37,7 +37,7 @@ const tail = function(inputArgs, fs) {
   let tailParameters = parseInput(inputArgs);
   tailParameters.command = 'tail';
 
-  if (isInvalidOption(tailParameters.type)) {
+  if (isInvalidOption(tailParameters.option)) {
     return displayUsage(tailParameters);
   }
 
@@ -51,18 +51,18 @@ const tail = function(inputArgs, fs) {
 };
 
 const displayUsage = function(messageParameters) {
-  let { type, command } = messageParameters;
+  let { option, command } = messageParameters;
   let usageMessage = {
-    head: "head: illegal option -- " + type +
+    head: "head: illegal option -- " + option +
       "\nusage: head [-n lines | -c bytes] [file ...]",
-    tail: "tail: illegal option -- " + type +
+    tail: "tail: illegal option -- " + option +
       "\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
   };
   return usageMessage[command];
 };
 
 const invalidCountMessage = function(messageParameters) {
-  let { command, type, count } = messageParameters;
+  let { command, option, count } = messageParameters;
   let invalidOffsetMessage = "tail: illegal offset -- " + count;
   let invalidMessage = {
     head: {
@@ -74,7 +74,7 @@ const invalidCountMessage = function(messageParameters) {
       c: invalidOffsetMessage
     }
   };
-  return invalidMessage[command][type];
+  return invalidMessage[command][option];
 };
 
 const isCountAboveZero = function(count) {
@@ -83,11 +83,11 @@ const isCountAboveZero = function(count) {
 };
 
 const selectOperation = function(headOption) {
-  let type = {
+  let option = {
     n: getFirstNLines,
     c: getFirstNBytes
   };
-  return type[headOption];
+  return option[headOption];
 };
 
 const selectFileContentOrder = function (commandName) {
@@ -99,8 +99,8 @@ const selectFileContentOrder = function (commandName) {
 }
 
 const runCommand = function (filesDetail, commandValues) {
-  let { type, count, command } = commandValues;
-  let commandOperation = selectOperation(type);
+  let { option, count, command } = commandValues;
+  let commandOperation = selectOperation(option);
   let numberOfFiles = filesDetail.length;
   let fileContentOrder = selectFileContentOrder(command);
   return filesDetail.map((fileDetail) => {

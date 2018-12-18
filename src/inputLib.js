@@ -4,7 +4,7 @@ const parseInput = function (arguments) {
     return getOptionDetails(arguments);
   }
   return {
-    type: 'n',
+    option: 'n',
     count: 10,
     files: arguments
   };
@@ -14,7 +14,7 @@ const getOptionDetails = function (optionArguments) {
   let firstArgument = optionArguments[0];
   if (isValidOption(firstArgument)) {
     return {
-      type: firstArgument[1],
+      option: firstArgument[1],
       count: optionArguments[1],
       files: optionArguments.slice(2)
     };
@@ -22,14 +22,14 @@ const getOptionDetails = function (optionArguments) {
 
   if (!isNaN(firstArgument)) {
     return {
-      type: 'n',
+      option: 'n',
       count: Math.abs(firstArgument),
       files: optionArguments.slice(1)
     };
   }
 
   return {
-    type: firstArgument[1],
+    option: firstArgument[1],
     count: firstArgument.slice(2),
     files: optionArguments.slice(1)
   };

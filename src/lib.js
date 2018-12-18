@@ -13,10 +13,7 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
-const {
-  displayUsage,
-  invalidCountMessage
-} = require("./errorLib.js");
+const { displayUsage, invalidCountMessage } = require("./errorLib.js");
 
 const head = function (inputArgs, fs) {
   let headParameters = parseInput(inputArgs);
@@ -65,22 +62,6 @@ const isInvalidOption = function(option) {
   return option != 'n' && option != 'c';
 }
 
-const selectOperation = function(headOption) {
-  let option = {
-    n: getFirstNLines,
-    c: getFirstNBytes
-  };
-  return option[headOption];
-};
-
-const selectFileContentOrder = function (commandName) {
-  let command = {
-    head: identity,
-    tail: reverseText
-  }
-  return command[commandName];
-}
-
 const runCommand = function (filesDetail, commandValues) {
   let { option, count, command } = commandValues;
   let commandOperation = selectOperation(option);
@@ -94,6 +75,32 @@ const runCommand = function (filesDetail, commandValues) {
     return extractFileContent(fileFormatDetails);
   }).join('\n\n');
 };
+
+const selectOperation = function(selectedOption) {
+  let option = {
+    n: getFirstNLines,
+    c: getFirstNBytes
+  };
+  return option[selectedOption];
+};
+
+const getFirstNLines = function(content, count) {
+  let contentArray = content.split("\n");
+  return contentArray.slice(0, count).join("\n");
+};
+
+const getFirstNBytes = function(content, count) {
+  let contentArray = content.split("");
+  return contentArray.slice(0, count).join("");
+};
+
+const selectFileContentOrder = function (selectedCommand) {
+  let command = {
+    head: identity,
+    tail: reverseText
+  }
+  return command[selectedCommand];
+}
 
 const extractFileContent = function ({ fileDetail, commandOperation, count,
   numberOfFiles, fileContentOrder }) {
@@ -112,16 +119,6 @@ const extractFileContent = function ({ fileDetail, commandOperation, count,
   }
   return fileDetail.errorMessage;
 }
-
-const getFirstNLines = function(content, count) {
-  let contentArray = content.split("\n");
-  return contentArray.slice(0, count).join("\n");
-};
-
-const getFirstNBytes = function(content, count) {
-  let contentArray = content.split("");
-  return contentArray.slice(0, count).join("");
-};
 
 module.exports = {
   head,

@@ -21,7 +21,11 @@ describe("isNaturalNumber", () => {
     assert.equal(isNaturalNumber(6.8), false);
   });
 
-  it("should return false when string is given", () => {
+  it("should return false when number is negative", () => {
+    assert.equal(isNaturalNumber(-1), false);
+  });
+
+  it("should return false when empty string is given", () => {
     assert.equal(isNaturalNumber(''), false);
   });
 
@@ -39,7 +43,11 @@ describe("isInteger", () => {
     assert.equal(isInteger(-1), true);
   });
 
-  it("should return false when value is not an int", () => {
+  it("should return false when value is in decimal", () => {
+    assert.equal(isInteger(5.7), false);
+  });
+
+  it("should return false when value is in string", () => {
     assert.equal(isInteger("a"), false);
   });
 

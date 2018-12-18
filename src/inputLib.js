@@ -1,3 +1,5 @@
+const { isNumber } = require('../src/util.js');
+
 const parseInput = function (arguments) {
   let firstArgument = arguments[0];
   if (firstArgument.startsWith('-')) {
@@ -20,7 +22,7 @@ const getOptionDetails = function (optionArguments) {
     };
   }
 
-  if (!isNaN(firstArgument)) {
+  if (isNumber(firstArgument)) {
     return {
       option: 'n',
       count: Math.abs(firstArgument),
@@ -36,7 +38,7 @@ const getOptionDetails = function (optionArguments) {
 }
 
 const isValidOption = function (option) {
-  return option == '-n' || option == '-c';
+  return option === '-n' || option === '-c';
 }
 
 module.exports = {

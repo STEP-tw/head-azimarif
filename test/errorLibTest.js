@@ -1,8 +1,4 @@
-const { 
-  invalidCountMessage, 
-  displayUsage, 
-  isInvalidOption 
-} = require("../src/errorLib.js");
+const { invalidCountMessage, displayUsage } = require("../src/errorLib.js");
 
 const assert = require("assert");
 
@@ -45,23 +41,5 @@ describe("displayUsage", () => {
       "tail: illegal option -- a\n" +
       "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
     assert.deepEqual(displayUsage({ command: "tail", option: "a" }), expectedOutput);
-  });
-});
-
-describe('isInvalidOption', () => {
-  it('should return true when invalid option is given', () => {
-    assert.deepEqual(isInvalidOption('p'), true);
-  });
-
-  it('should return false when valid option is given', () => {
-    assert.deepEqual(isInvalidOption('n'), false);
-  });
-
-  it('should return false when valid option is given', () => {
-    assert.deepEqual(isInvalidOption('c'), false);
-  });
-
-  it('should return true when no option is given', () => {
-    assert.deepEqual(isInvalidOption(''), true);
   });
 });

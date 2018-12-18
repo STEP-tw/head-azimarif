@@ -1,6 +1,4 @@
-const {
-  reverseText
-} = require('../src/util.js');
+const { reverseText } = require("../src/util.js");
 
 const displayFileNotFoundError = function(fileName, command) {
   return command + ": " + fileName + ": No such file or directory"; 

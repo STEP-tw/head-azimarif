@@ -1,6 +1,11 @@
 const { parseInput } = require("./inputLib.js");
 
-const { reverseText, identity } = require("../src/util.js");
+const {
+  reverseText,
+  identity,
+  isInteger,
+  isNaturalNumber 
+} = require("../src/util.js");
 
 const {
   getFileDetails,
@@ -8,7 +13,10 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
-const { validateOptionArgs } = require('./errorLib.js');
+const {
+  displayUsage,
+  invalidCountMessage
+} = require("./errorLib.js");
 
 const head = function (inputArgs, fs) {
   let headParameters = parseInput(inputArgs);
@@ -35,6 +43,27 @@ const tail = function(inputArgs, fs) {
   tailParameters.count = Math.abs(tailParameters.count);
   return runCommand(filesDetail, tailParameters);
 };
+
+const validateOptionArgs = function (optionArguments) {
+  let invalidCount = {
+    head: isNaturalNumber,
+    tail: isInteger
+  }
+  let { command, option, count } = optionArguments;
+  let invalidCountChecker = invalidCount[command];
+  if (isInvalidOption(option)) {
+    return displayUsage(optionArguments);
+  }
+
+  if (!invalidCountChecker(count)) {
+    return invalidCountMessage(optionArguments);
+  }
+  return '';
+}
+
+const isInvalidOption = function(option) {
+  return option != 'n' && option != 'c';
+}
 
 const selectOperation = function(headOption) {
   let option = {
@@ -101,5 +130,7 @@ module.exports = {
   selectOperation,
   tail,
   runCommand,
-  selectFileContentOrder
+  selectFileContentOrder,
+  validateOptionArgs,
+  isInvalidOption
 };

@@ -24,30 +24,7 @@ const invalidCountMessage = function (messageParameters) {
   return invalidMessage[command];
 };
 
-const validateOptionArgs = function (optionArguments) {
-  let invalidCount = {
-    head: isNaturalNumber,
-    tail: isInteger
-  }
-  let { command, option, count } = optionArguments;
-  let invalidCountChecker = invalidCount[command];
-  if (isInvalidOption(option)) {
-    return displayUsage(optionArguments);
-  }
-
-  if (!invalidCountChecker(count)) {
-    return invalidCountMessage(optionArguments);
-  }
-  return '';
-}
-
-const isInvalidOption = function(option) {
-  return option != 'n' && option != 'c';
-}
-
 module.exports = {
   displayUsage,
-  invalidCountMessage,
-  validateOptionArgs,
-  isInvalidOption
+  invalidCountMessage
 }

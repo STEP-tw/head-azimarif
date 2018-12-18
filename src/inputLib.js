@@ -1,5 +1,3 @@
-const { isInteger } = require('../src/util.js');
-
 const parseInput = function (inputArgs) {
   let firstArgument = inputArgs[0];
   if (firstArgument.startsWith('-')) {

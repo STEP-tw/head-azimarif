@@ -21,11 +21,19 @@ describe("isNumberGreater", () => {
   it("should return true when number is greater than 5", () => {
     assert.equal(isGreaterThanFive(6), true);
   });
+
+  it("should return false when string is given", () => {
+    assert.equal(isGreaterThanFive(''), false);
+  });
 });
 
 describe("isNumber", () => {
-  it("should return true when value is an int", () => {
+  it("should return true when positive value is given", () => {
     assert.equal(isNumber(0), true);
+  });
+
+  it("should return true when negative value is given", () => {
+    assert.equal(isNumber(-1), true);
   });
 
   it("should return false when value is not an int", () => {

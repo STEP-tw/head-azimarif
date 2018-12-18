@@ -84,7 +84,7 @@ describe("parseInput", () => {
       count: 1,
       files: ["file1.txt", "file2.txt"]
     };
-    assert.deepEqual(parseInput(["-c1", "file1.txt", "file2.txt"]),expectedOutput);
+    assert.deepEqual(parseInput(["-c1", "file1.txt", "file2.txt"]), expectedOutput);
 
     expectedOutput = {
       option: "c",
@@ -99,5 +99,12 @@ describe("parseInput", () => {
       files: ["file1.txt", "file2.txt"]
     };
     assert.deepEqual(parseInput(["-c", "1", "file1.txt", "file2.txt"]), expectedOutput);
+
+    expectedOutput = {
+      option: "c",
+      count: -1,
+      files: ["file1.txt", "file2.txt"]
+    };
+    assert.deepEqual(parseInput(["-c", "-1", "file1.txt", "file2.txt"]), expectedOutput);
   });
 });

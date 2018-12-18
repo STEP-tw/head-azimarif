@@ -1,5 +1,5 @@
 const {
-  isNumberGreater,
+  isNaturalNumber,
   isNumber,
   reverseText,
   identity
@@ -7,23 +7,22 @@ const {
 
 const assert = require("assert");
 
-describe("isNumberGreater", () => {
-  let isGreaterThanFive = isNumberGreater(5);
+describe("isNaturalNumber", () => {
 
   it("should return false when number is less than 5", () => {
-    assert.equal(isGreaterThanFive(0), false);
+    assert.equal(isNaturalNumber(0), false);
   });
 
   it("should return false when number is same itself", () => {
-    assert.equal(isGreaterThanFive(5), false);
+    assert.equal(isNaturalNumber(5), true);
   });
 
   it("should return true when number is greater than 5", () => {
-    assert.equal(isGreaterThanFive(6), true);
+    assert.equal(isNaturalNumber(6), true);
   });
 
   it("should return false when string is given", () => {
-    assert.equal(isGreaterThanFive(''), false);
+    assert.equal(isNaturalNumber(''), false);
   });
 });
 

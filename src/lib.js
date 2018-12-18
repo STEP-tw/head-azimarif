@@ -1,7 +1,7 @@
 const { parseInput } = require("./inputLib.js");
 
 const {
-  isNumberGreater,
+  isNaturalNumber,
   isNumber,
   reverseText,
   identity
@@ -27,7 +27,7 @@ const head = function(inputArgs, fs) {
     return displayUsage(headParameters);
   }
 
-  if (!isCountAboveZero(headParameters.count)) {
+  if (!isNaturalNumber(headParameters.count)) {
     return invalidCountMessage(headParameters);
   }
 
@@ -50,11 +50,6 @@ const tail = function(inputArgs, fs) {
   let filesDetail = tailParameters.files.map(file => getFileDetailsInReverse(file, fs));
   tailParameters.count = Math.abs(tailParameters.count);
   return runCommand(filesDetail, tailParameters);
-};
-
-const isCountAboveZero = function(count) {
-  let isGreaterThanZero = isNumberGreater(0);
-  return isGreaterThanZero(count);
 };
 
 const selectOperation = function(headOption) {
@@ -83,13 +78,12 @@ const runCommand = function (filesDetail, commandValues) {
       fileDetail, commandOperation, count, numberOfFiles,
       fileContentOrder
     };
-    return getFormattedFileContent(fileFormatDetails);
+    return extractFileContent(fileFormatDetails);
   }).join('\n\n');
 };
 
-const getFormattedFileContent = function (fileFormatDetails) {
-  let { fileDetail, commandOperation, count,
-    numberOfFiles, fileContentOrder } = fileFormatDetails;
+const extractFileContent = function ({ fileDetail, commandOperation, count,
+  numberOfFiles, fileContentOrder }) {
   if (fileDetail.isExists) {
     let requiredFileContent = '';
     let fileContent = commandOperation(fileDetail.content, count);
@@ -120,7 +114,6 @@ module.exports = {
   head,
   getFirstNLines,
   getFirstNBytes,
-  isCountAboveZero,
   selectOperation,
   tail,
   runCommand,

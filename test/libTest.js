@@ -1,8 +1,6 @@
 const {
   getFirstNLines,
   getFirstNBytes,
-  isCountAboveZero,
-  runCommand,
   selectOperation,
   head,
   tail,
@@ -55,28 +53,6 @@ describe('getFirstNBytes', () => {
 
   it('should return 5 bytes  when count is 5', () => {
     assert.deepEqual(getFirstNBytes(fileContent, 5), '1\n2\n3');
-  });
-});
-
-describe('isCountAboveZero', () => {
-  it('should return false if count is 0', () => {
-    assert.deepEqual(isCountAboveZero(0), false);
-  });
-
-  it('should return false if count is less than 0', () => {
-    assert.deepEqual(isCountAboveZero(-1), false);
-  });
-
-  it('should return false if count is non integer value', () => {
-    assert.deepEqual(isCountAboveZero('a'), false);
-  });
-
-  it('should return true if count is greater than 0', () => {
-    assert.deepEqual(isCountAboveZero(1), true);
-  });
-
-  it('should return true if count is greater than 0', () => {
-    assert.deepEqual(isCountAboveZero(10), true);
   });
 });
 

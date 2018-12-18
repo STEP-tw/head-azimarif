@@ -17,7 +17,7 @@ const isInvalidOption = function(option) {
   return option != 'n' && option != 'c';
 }
 
-const head = function(fs, inputArgs) {
+const head = function(inputArgs, fs) {
   let headParameters = parseInput(inputArgs);
   headParameters.command = 'head';
 
@@ -33,7 +33,7 @@ const head = function(fs, inputArgs) {
   return runCommand(filesDetail, headParameters);
 };
 
-const tail = function(fs, inputArgs) {
+const tail = function(inputArgs, fs) {
   let tailParameters = parseInput(inputArgs);
   tailParameters.command = 'tail';
 

@@ -9,7 +9,7 @@ const {
   head,
   tail,
   selectFileContentOrder,
-  isInvalidType
+  isInvalidOption
 } = require('../src/lib.js');
 
 const { identity, reverseText } = require('../src/util.js');
@@ -80,28 +80,28 @@ describe('isCountAboveZero', () => {
 
 describe('invalidCountMessage', () => {
   it('should return message with line and count', () => {
-    assert.deepEqual(invalidCountMessage({ option: 'head', type: 'n', count: -1 }), 'head: illegal line count -- -1');
+    assert.deepEqual(invalidCountMessage({ command: 'head', type: 'n', count: -1 }), 'head: illegal line count -- -1');
   });
 
   it('should return message with line and count', () => {
-    assert.deepEqual(invalidCountMessage({ option: 'head', type: 'c', count: -1 }), 'head: illegal byte count -- -1');
+    assert.deepEqual(invalidCountMessage({ command: 'head', type: 'c', count: -1 }), 'head: illegal byte count -- -1');
   });
 
   it('should return message with line and count', () => {
-    assert.deepEqual(invalidCountMessage({ option: 'tail', type: 'n', count: -1 }), 'tail: illegal offset -- -1');
+    assert.deepEqual(invalidCountMessage({ command: 'tail', type: 'n', count: -1 }), 'tail: illegal offset -- -1');
   });
 
   it('should return message with line and count', () => {
-    assert.deepEqual(invalidCountMessage({ option: 'tail', type: 'c', count: -1 }), 'tail: illegal offset -- -1');
+    assert.deepEqual(invalidCountMessage({ command: 'tail', type: 'c', count: -1 }), 'tail: illegal offset -- -1');
   });
 });
 
 describe('displayUsage', () => {
   it('should return head usage message with type', () => {
-    assert.deepEqual(displayUsage({ option: 'head', type: 'p'}), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
+    assert.deepEqual(displayUsage({ command: 'head', type: 'p'}), 'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]');
   });
   it('should return tail usage message with type', () => {
-    assert.deepEqual(displayUsage({ option: 'tail', type: '-'}), 'tail: illegal option -- -\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
+    assert.deepEqual(displayUsage({ command: 'tail', type: '-'}), 'tail: illegal option -- -\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]');
   });
 });
 
@@ -117,27 +117,27 @@ describe('runCommand', () => {
       ];
 
       it('should return empty string when input line is 0 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 0, option: 'head' }), '');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 0, command: 'head' }), '');
       });
 
       it('should return one line when input line is 1 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 1, option: 'head' }), 'This is the first Line.');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 1, command: 'head' }), 'This is the first Line.');
       });
 
       it('should return all content of file when input line is greater than total file line length and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 10, option: 'head' }), 'This is the first Line.\nSecond Line\n1234\nEND');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 10, command: 'head' }), 'This is the first Line.\nSecond Line\n1234\nEND');
       });
 
       it('should return empty string when input character count is 0 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 0, option: 'head' }), '');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 0, command: 'head' }), '');
       });
 
       it('should return one character when input character count is 1 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 1, option: 'head' }), 'T');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 1, command: 'head' }), 'T');
       });
 
       it('should return all content of file when input character count is greater than total file characters length and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 100, option: 'head' }), 'This is the first Line.\nSecond Line\n1234\nEND');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 100, command: 'head' }), 'This is the first Line.\nSecond Line\n1234\nEND');
       });
     });
 
@@ -155,19 +155,19 @@ describe('runCommand', () => {
         }
       ];
       it('should return one line from two files with their name as heading when input line is 1 and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 1 , option: 'head' }), '==> testFile1 <==\nThis is the first Line.\n\n==> testFile2 <==\nOne');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 1 , command: 'head' }), '==> testFile1 <==\nThis is the first Line.\n\n==> testFile2 <==\nOne');
       });
 
       it('should return all lines from two files with their name as heading when input line is greater than line count of files and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 10, option: 'head'  }), '==> testFile1 <==\nThis is the first Line.\nSecond Line\n1234\nEND\n\n==> testFile2 <==\nOne\nTwo\nThree\n');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 10, command: 'head'  }), '==> testFile1 <==\nThis is the first Line.\nSecond Line\n1234\nEND\n\n==> testFile2 <==\nOne\nTwo\nThree\n');
       });
 
       it('should return one character from two files with their name as heading when input character count is 1 and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 1 , option: 'head' }), '==> testFile1 <==\nT\n\n==> testFile2 <==\nO');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 1 , command: 'head' }), '==> testFile1 <==\nT\n\n==> testFile2 <==\nO');
       });
 
       it('should return all characters from two files with their name as heading when input character count is greater than total character length of files and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 10, option: 'head'  }), '==> testFile1 <==\nThis is th\n\n==> testFile2 <==\nOne\nTwo\nTh');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 10, command: 'head'  }), '==> testFile1 <==\nThis is th\n\n==> testFile2 <==\nOne\nTwo\nTh');
       });
     });
   });
@@ -183,27 +183,27 @@ describe('runCommand', () => {
       ];
 
       it('should return empty string when input line is 0 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 0, option: 'tail' }), '');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 0, command: 'tail' }), '');
       });
 
       it('should return one line when input line is 1 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 1, option: 'tail' }), '.eniL tsrif eht si sihT');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 1, command: 'tail' }), '.eniL tsrif eht si sihT');
       });
 
       it('should return all content of file when input line is greater than total file line length and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 10, option: 'tail' }), 'DNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT');
+        assert.deepEqual(runCommand(fileDetails, { type : 'n', count : 10, command: 'tail' }), 'DNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT');
       });
 
       it('should return empty string when input character count is 0 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 0, option: 'tail' }), '');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 0, command: 'tail' }), '');
       });
 
       it('should return one character when input character count is 1 and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 1, option: 'tail' }), 'T');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 1, command: 'tail' }), 'T');
       });
 
       it('should return all content of file when input character count is greater than total file characters length and only file passed', () => {
-        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 100, option: 'tail' }), 'DNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT');
+        assert.deepEqual(runCommand(fileDetails, { type : 'c', count : 100, command: 'tail' }), 'DNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT');
       });
     });
 
@@ -221,19 +221,19 @@ describe('runCommand', () => {
         }
       ];
       it('should return one line from two files with their name as heading   when input line is 1 and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 1 , option: 'tail'}), '==> testFile1 <==\n.eniL tsrif eht si sihT\n\n==> testFile2 <==\nenO');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 1 , command: 'tail'}), '==> testFile1 <==\n.eniL tsrif eht si sihT\n\n==> testFile2 <==\nenO');
       });
 
       it('should return all lines from two files with their name as heading when input line is greater than line count of files and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 10, option: 'tail' }), '==> testFile1 <==\nDNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT\n\n==> testFile2 <==\n\neerhT\nowT\nenO');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'n', count : 10, command: 'tail' }), '==> testFile1 <==\nDNE\n4321\neniL dnoceS\n.eniL tsrif eht si sihT\n\n==> testFile2 <==\n\neerhT\nowT\nenO');
       });
 
       it('should return one character from two files with their name as heading when input character count is 1 and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 1 , option: 'tail'}), '==> testFile1 <==\nT\n\n==> testFile2 <==\nO');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 1 , command: 'tail'}), '==> testFile1 <==\nT\n\n==> testFile2 <==\nO');
       });
 
       it('should return all characters from two files with their name as heading when input character count is greater than total character length of files and files are 2', () => {
-        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 10, option: 'tail' }), '==> testFile1 <==\nht si sihT\n\n==> testFile2 <==\nhT\nowT\nenO');
+        assert.deepEqual(runCommand(fileDetails1, { type : 'c', count : 10, command: 'tail' }), '==> testFile1 <==\nht si sihT\n\n==> testFile2 <==\nhT\nowT\nenO');
       });
     });
   });
@@ -349,17 +349,17 @@ describe('selectFileContentOrder', () => {
   });
 });
 
-describe('isInvalidType', () => {
+describe('isInvalidOption', () => {
   it('should return true when invalid type is given', () => {
-    assert.deepEqual(isInvalidType('p'), true);
+    assert.deepEqual(isInvalidOption('p'), true);
   });
   it('should return false when valid type is given', () => {
-    assert.deepEqual(isInvalidType('n'), false);
+    assert.deepEqual(isInvalidOption('n'), false);
   });
   it('should return false when valid type is given', () => {
-    assert.deepEqual(isInvalidType('c'), false);
+    assert.deepEqual(isInvalidOption('c'), false);
   });
   it('should return true when no type is given', () => {
-    assert.deepEqual(isInvalidType(''), true);
+    assert.deepEqual(isInvalidOption(''), true);
   });
 });

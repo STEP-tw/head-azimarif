@@ -13,15 +13,15 @@ const {
   getFileDetailsInReverse
 } = require("./fileLib.js");
 
-const isInvalidType = function(type) {
-  return type != 'n' && type != 'c';
+const isInvalidOption = function(option) {
+  return option != 'n' && option != 'c';
 }
 
 const head = function(fs, inputArgs) {
   let headParameters = parseInput(inputArgs);
-  headParameters.option = 'head';
+  headParameters.command = 'head';
 
-  if (isInvalidType(headParameters.type)) {
+  if (isInvalidOption(headParameters.type)) {
     return displayUsage(headParameters);
   }
 
@@ -35,9 +35,9 @@ const head = function(fs, inputArgs) {
 
 const tail = function(fs, inputArgs) {
   let tailParameters = parseInput(inputArgs);
-  tailParameters.option = 'tail';
+  tailParameters.command = 'tail';
 
-  if (isInvalidType(tailParameters.type)) {
+  if (isInvalidOption(tailParameters.type)) {
     return displayUsage(tailParameters);
   }
 
@@ -51,18 +51,18 @@ const tail = function(fs, inputArgs) {
 };
 
 const displayUsage = function(messageParameters) {
-  let { type, option } = messageParameters;
+  let { type, command } = messageParameters;
   let usageMessage = {
     head: "head: illegal option -- " + type +
       "\nusage: head [-n lines | -c bytes] [file ...]",
     tail: "tail: illegal option -- " + type +
       "\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
   };
-  return usageMessage[option];
+  return usageMessage[command];
 };
 
 const invalidCountMessage = function(messageParameters) {
-  let { option, type, count } = messageParameters;
+  let { command, type, count } = messageParameters;
   let invalidOffsetMessage = "tail: illegal offset -- " + count;
   let invalidMessage = {
     head: {
@@ -74,7 +74,7 @@ const invalidCountMessage = function(messageParameters) {
       c: invalidOffsetMessage
     }
   };
-  return invalidMessage[option][type];
+  return invalidMessage[command][type];
 };
 
 const isCountAboveZero = function(count) {
@@ -90,19 +90,19 @@ const selectOperation = function(headOption) {
   return type[headOption];
 };
 
-const selectFileContentOrder = function (currentOption) {
-  let option = {
+const selectFileContentOrder = function (commandName) {
+  let command = {
     head: identity,
     tail: reverseText
   }
-  return option[currentOption];
+  return command[commandName];
 }
 
 const runCommand = function (filesDetail, commandValues) {
-  let { type, count, option } = commandValues;
+  let { type, count, command } = commandValues;
   let commandOperation = selectOperation(type);
   let numberOfFiles = filesDetail.length;
-  let fileContentOrder = selectFileContentOrder(option);
+  let fileContentOrder = selectFileContentOrder(command);
   return filesDetail.map((fileDetail) => {
     let fileFormatDetails = {
       fileDetail, commandOperation, count, numberOfFiles,
@@ -150,5 +150,5 @@ module.exports = {
   tail,
   runCommand,
   selectFileContentOrder,
-  isInvalidType
+  isInvalidOption
 };

@@ -13,6 +13,11 @@ describe('getFileHeading', () => {
     let expectedOutput = '==> ' + file + ' <==\n';
     assert.equal(getFileHeading(file), expectedOutput);
   });
+
+  it('should return the heading when file name is not given', () => {
+    let expectedOutput = '==>  <==\n';
+    assert.equal(getFileHeading(''), expectedOutput);
+  });
 });
 
 describe('displayFileNotFoundError', () => {

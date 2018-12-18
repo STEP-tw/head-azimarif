@@ -1,9 +1,9 @@
 const isNaturalNumber = function (number) {
-  return number > 0 && number % 1 == 0;
+  return number > 0 && number % 1 === 0;
 }
 
-const isNumber = function (value) {
-  return !isNaN(value);
+const isInteger = function (number) {
+  return !isNaN(number) && number % 1 === 0;
 }
 
 const reverseText = function (text) {
@@ -16,7 +16,7 @@ const identity = function (data) {
 
 module.exports = {
   isNaturalNumber,
-  isNumber,
+  isInteger,
   reverseText,
   identity
 }

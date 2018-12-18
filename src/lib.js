@@ -2,7 +2,7 @@ const { parseInput } = require("./inputLib.js");
 
 const {
   isNaturalNumber,
-  isNumber,
+  isInteger,
   reverseText,
   identity
 } = require("../src/util.js");
@@ -43,7 +43,7 @@ const tail = function(inputArgs, fs) {
     return displayUsage(tailParameters);
   }
 
-  if (!isNumber(tailParameters.count)) {
+  if (!isInteger(tailParameters.count)) {
     return invalidCountMessage(tailParameters);
   }
 

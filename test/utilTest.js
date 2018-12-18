@@ -1,6 +1,6 @@
 const {
   isNaturalNumber,
-  isNumber,
+  isInteger,
   reverseText,
   identity
 } = require("../src/util.js");
@@ -26,21 +26,21 @@ describe("isNaturalNumber", () => {
   });
 });
 
-describe("isNumber", () => {
+describe("isInteger", () => {
   it("should return true when positive value is given", () => {
-    assert.equal(isNumber(0), true);
+    assert.equal(isInteger(0), true);
   });
 
   it("should return true when negative value is given", () => {
-    assert.equal(isNumber(-1), true);
+    assert.equal(isInteger(-1), true);
   });
 
   it("should return false when value is not an int", () => {
-    assert.equal(isNumber("a"), false);
+    assert.equal(isInteger("a"), false);
   });
 
   it("should return false when value is some special character", () => {
-    assert.equal(isNumber("-"), false);
+    assert.equal(isInteger("-"), false);
   });
 });
 

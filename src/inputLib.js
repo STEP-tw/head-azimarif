@@ -1,4 +1,4 @@
-const { isNumber } = require('../src/util.js');
+const { isInteger } = require('../src/util.js');
 
 const parseInput = function (inputArgs) {
   let firstArgument = inputArgs[0];
@@ -22,7 +22,7 @@ const parseInputWithOption = function (inputArgs) {
     };
   }
 
-  if (isNumber(firstArgument)) {
+  if (isInteger(firstArgument)) {
     return {
       option: 'n',
       count: Math.abs(firstArgument),

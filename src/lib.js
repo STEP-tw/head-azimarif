@@ -29,8 +29,8 @@ const head = function(fs, inputArgs) {
     return invalidCountMessage(headParameters);
   }
 
-  let fileDetails = headParameters.files.map(file => getFileDetails(file, fs));
-  return runCommand(fileDetails, headParameters);
+  let filesDetail = headParameters.files.map(file => getFileDetails(file, fs));
+  return runCommand(filesDetail, headParameters);
 };
 
 const tail = function(fs, inputArgs) {
@@ -45,9 +45,9 @@ const tail = function(fs, inputArgs) {
     return invalidCountMessage(tailParameters);
   }
 
-  let fileDetails = tailParameters.files.map(file => getFileDetailsInReverse(file, fs));
+  let filesDetail = tailParameters.files.map(file => getFileDetailsInReverse(file, fs));
   tailParameters.count = Math.abs(tailParameters.count);
-  return runCommand(fileDetails, tailParameters);
+  return runCommand(filesDetail, tailParameters);
 };
 
 const displayUsage = function(messageParameters) {
@@ -98,12 +98,12 @@ const selectFileContentOrder = function (currentOption) {
   return option[currentOption];
 }
 
-const runCommand = function (fileDetails, commandValues) {
+const runCommand = function (filesDetail, commandValues) {
   let { type, count, option } = commandValues;
   let commandOperation = selectOperation(type);
-  let numberOfFiles = fileDetails.length;
+  let numberOfFiles = filesDetail.length;
   let fileContentOrder = selectFileContentOrder(option);
-  return fileDetails.map((fileDetail) => {
+  return filesDetail.map((fileDetail) => {
     let fileFormatDetails = {
       fileDetail, commandOperation, count, numberOfFiles,
       fileContentOrder

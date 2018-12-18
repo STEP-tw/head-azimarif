@@ -7,75 +7,61 @@ const {
 const assert = require("assert");
 
 describe("invalidCountMessage", () => {
-  it("should return message with line and count", () => {
+  it("should return illegal line count message for head -n option", () => {
+    let userInput = { command: "head", option: "n", count: -1 };
     let expectedOutput = "head: illegal line count -- -1";
-    assert.deepEqual(
-      invalidCountMessage({ command: "head", option: "n", count: -1 }),
-      expectedOutput
-    );
+    assert.deepEqual(invalidCountMessage(userInput), expectedOutput);
   });
 
-  it("should return message with line and count", () => {
-    let expectedOutput = "head: illegal byte count -- -1";
-    assert.deepEqual(
-      invalidCountMessage({ command: "head", option: "c", count: -1 }),
-      expectedOutput
-    );
+  it("should return illegal byte count message for head -c option", () => {
+    let userInput = { command: "head", option: "c", count: '-a' };
+    let expectedOutput = "head: illegal byte count -- -a";
+    assert.deepEqual(invalidCountMessage(userInput), expectedOutput);
   });
 
-  it("should return message with line and count", () => {
+  it("should return illegal offset for tail -n option", () => {
+    let userInput = { command: "tail", option: "n", count: -1 };
     let expectedOutput = "tail: illegal offset -- -1";
-    assert.deepEqual(
-      invalidCountMessage({ command: "tail", option: "n", count: -1 }),
-      expectedOutput
-    );
+    assert.deepEqual(invalidCountMessage(userInput), expectedOutput);
   });
 
-  it("should return message with line and count", () => {
-    let expectedOutput = "tail: illegal offset -- -1";
-    assert.deepEqual(
-      invalidCountMessage({ command: "tail", option: "c", count: -1 }),
-      expectedOutput
-    );
+  it("should return illegal offset for tail -c option", () => {
+    let userInput = { command: "tail", option: "c", count: 'p' };
+    let expectedOutput = "tail: illegal offset -- p";
+    assert.deepEqual(invalidCountMessage(userInput), expectedOutput);
   });
 });
 
 describe("displayUsage", () => {
-  it("should return head usage message with type", () => {
+  it("should return head usage message with option", () => {
     let expectedOutput =
       "head: illegal option -- p\n" +
       "usage: head [-n lines | -c bytes] [file ...]";
-    assert.deepEqual(
-      displayUsage({ command: "head", option: "p" }),
-      expectedOutput
-    );
+    assert.deepEqual(displayUsage({ command: "head", option: "p" }), expectedOutput);
   });
 
-  it("should return tail usage message with type", () => {
+  it("should return tail usage message with option", () => {
     let expectedOutput =
-      "tail: illegal option -- -\n" +
+      "tail: illegal option -- a\n" +
       "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
-    assert.deepEqual(
-      displayUsage({ command: "tail", option: "-" }),
-      expectedOutput
-    );
+    assert.deepEqual(displayUsage({ command: "tail", option: "a" }), expectedOutput);
   });
 });
 
 describe('isInvalidOption', () => {
-  it('should return true when invalid type is given', () => {
+  it('should return true when invalid option is given', () => {
     assert.deepEqual(isInvalidOption('p'), true);
   });
 
-  it('should return false when valid type is given', () => {
+  it('should return false when valid option is given', () => {
     assert.deepEqual(isInvalidOption('n'), false);
   });
 
-  it('should return false when valid type is given', () => {
+  it('should return false when valid option is given', () => {
     assert.deepEqual(isInvalidOption('c'), false);
   });
 
-  it('should return true when no type is given', () => {
+  it('should return true when no option is given', () => {
     assert.deepEqual(isInvalidOption(''), true);
   });
 });

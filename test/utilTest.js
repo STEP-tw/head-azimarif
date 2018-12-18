@@ -9,20 +9,24 @@ const assert = require("assert");
 
 describe("isNaturalNumber", () => {
 
-  it("should return false when number is less than 5", () => {
+  it("should return false when number is 0", () => {
     assert.equal(isNaturalNumber(0), false);
   });
 
-  it("should return false when number is same itself", () => {
+  it("should return false when number is greater than 1", () => {
     assert.equal(isNaturalNumber(5), true);
   });
 
-  it("should return true when number is greater than 5", () => {
-    assert.equal(isNaturalNumber(6), true);
+  it("should return false when number is decimal", () => {
+    assert.equal(isNaturalNumber(6.8), false);
   });
 
   it("should return false when string is given", () => {
     assert.equal(isNaturalNumber(''), false);
+  });
+
+  it("should return false when special character is given", () => {
+    assert.equal(isNaturalNumber('$'), false);
   });
 });
 

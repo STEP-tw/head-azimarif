@@ -84,14 +84,14 @@ const selectOperation = function(selectedOption) {
   return option[selectedOption];
 };
 
-const getFirstNLines = function(content, count) {
+const getFirstNLines = function(content, numberOfLines) {
   let contentArray = content.split("\n");
-  return contentArray.slice(0, count).join("\n");
+  return contentArray.slice(0, numberOfLines).join("\n");
 };
 
-const getFirstNBytes = function(content, count) {
+const getFirstNBytes = function(content, numberOfBytes) {
   let contentArray = content.split("");
-  return contentArray.slice(0, count).join("");
+  return contentArray.slice(0, numberOfBytes).join("");
 };
 
 const selectFileContentOrder = function (selectedCommand) {

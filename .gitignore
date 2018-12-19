@@ -1,1 +1,5 @@
 *.sw?
+.vscode
+coverage
+node_modules
+.nyc_output

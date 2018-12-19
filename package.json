@@ -1,0 +1,29 @@
+{
+  "name": "head-tail",
+  "version": "1.0.0",
+  "description": "head and tail shell command in node.js",
+  "main": "head.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/head-azimarif.git"
+  },
+  "keywords": [
+    "head",
+    "tail"
+  ],
+  "author": "Arif Ansari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/head-azimarif/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/head-azimarif#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}

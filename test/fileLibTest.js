@@ -21,12 +21,20 @@ describe('getFileHeading', () => {
 });
 
 describe('displayFileNotFoundError', () => {
-  it('should return file not found message with file name', () => {
+  it('should return file not found message when file name with extension is given', () => {
     let expectedOutput = 'head: myFile.txt: No such file or directory';
     assert.equal(displayFileNotFoundError('myFile.txt', 'head'), expectedOutput);
 
     expectedOutput = 'head: 123.txt: No such file or directory';
     assert.equal(displayFileNotFoundError('123.txt', 'head'), expectedOutput);
+  });
+
+  it('should return file not found message when file name with extension is given', () => {
+    let expectedOutput = 'head: file1: No such file or directory';
+    assert.equal(displayFileNotFoundError('file1', 'head'), expectedOutput);
+
+    expectedOutput = 'head: 121: No such file or directory';
+    assert.equal(displayFileNotFoundError('121', 'head'), expectedOutput);
   });
 
   it('should return file not found message with file name', () => {
@@ -35,6 +43,14 @@ describe('displayFileNotFoundError', () => {
 
     expectedOutput = 'tail: 123.txt: No such file or directory';
     assert.equal(displayFileNotFoundError('123.txt', 'tail'), expectedOutput);
+  });
+
+  it('should return file not found message when file name with extension is given', () => {
+    let expectedOutput = 'tail: file1: No such file or directory';
+    assert.equal(displayFileNotFoundError('file1', 'tail'), expectedOutput);
+
+    expectedOutput = 'tail: 121: No such file or directory';
+    assert.equal(displayFileNotFoundError('121', 'tail'), expectedOutput);
   });
 });
 

@@ -107,7 +107,8 @@ describe('head', () => {
     });
 
     it('should return error message if file not found', () => {
-      assert.deepEqual(head(['-c', '1', 'myFile', 'myFile2'], fs), 'head: myFile: No such file or directory\n\nhead: myFile2: No such file or directory');
+      let expectedOutput = 'head: myFile: No such file or directory\n\nhead: myFile2: No such file or directory';
+      assert.deepEqual(head(['-c', '1', 'myFile', 'myFile2'], fs), expectedOutput);
     });
   });
 

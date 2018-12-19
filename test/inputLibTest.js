@@ -1,4 +1,4 @@
-const { parseInput } = require("../src/inputLib.js");
+const { parseInput, isValidOption, hasDash } = require("../src/inputLib.js");
 const assert = require("assert");
 
 describe("parseInput", () => {
@@ -106,5 +106,33 @@ describe("parseInput", () => {
       files: ["file1.txt", "file2.txt"]
     };
     assert.deepEqual(parseInput(["-c", "-1", "file1.txt", "file2.txt"]), expectedOutput);
+  });
+});
+
+describe("isValidOption", () => {
+  it("should return true if option is n", () => {
+    assert.equal(isValidOption("-n"), true);
+  });
+
+  it("should return true if option is c", () => {
+    assert.equal(isValidOption("-c"), true);
+  });
+
+  it("should return false if option not specified", () => {
+    assert.equal(isValidOption(""), false);
+  });
+});
+
+describe("hasDash", () => {
+  it("should return true if input is dash n", () => {
+    assert.equal(hasDash("-"), true);
+  });
+
+  it("should return true if input starts with dash", () => {
+    assert.equal(hasDash("-c"), true);
+  });
+
+  it("should return false if no input specified", () => {
+    assert.equal(hasDash(""), false);
   });
 });

@@ -1,6 +1,6 @@
 const parseInput = function (inputArgs) {
   let firstArgument = inputArgs[0];
-  if (firstArgument.startsWith('-')) {
+  if (hasDash(firstArgument)) {
     return parseInputWithOption(inputArgs);
   }
   return {
@@ -39,7 +39,13 @@ const isValidOption = function (option) {
   return option === '-n' || option === '-c';
 }
 
+const hasDash = function (option) {
+  return option.startsWith('-');
+}
+
 module.exports = {
   parseInput,
-  parseInputWithOption
+  parseInputWithOption,
+  isValidOption,
+  hasDash
 }

@@ -1,5 +1,3 @@
-const { isNaturalNumber, isInteger } = require("../src/util.js");
-
 const displayUsage = function (messageParameters) {
   let { option, command } = messageParameters;
   let usageMessage = {

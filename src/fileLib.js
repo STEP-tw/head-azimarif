@@ -8,6 +8,16 @@ const getFileHeading = function(fileName) {
   return "==> " + fileName + " <==\n";
 };
 
+const getFileContentWithHeading = function(fileName, fileContent) {
+  let content  = getFileHeading(fileName);
+  content = content + fileContent;
+  return content;
+}
+
+const getFileContentWithoutHeading = function(fileName, fileContent) {
+  return fileContent;
+}
+
 const getFileDetails = function(file, fs) {
   let fileDetail = {
     content: readFile(file, fs),
@@ -48,5 +58,7 @@ module.exports = {
   getFileDetails,
   readFile,
   isFileExists,
-  getFileDetailsInReverse
+  getFileDetailsInReverse,
+  getFileContentWithHeading,
+  getFileContentWithoutHeading
 };

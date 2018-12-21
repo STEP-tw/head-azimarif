@@ -3,36 +3,20 @@ const parseInput = function (inputArgs) {
   if (hasDash(firstArgument)) {
     return parseInputWithOption(inputArgs);
   }
-  return {
-    option: 'n',
-    count: 10,
-    files: inputArgs
-  };
+  return createParameterObject('n', 10, inputArgs);
 }
 
 const parseInputWithOption = function (inputArgs) {
   let firstArgument = inputArgs[0];
   if (isValidOption(firstArgument)) {
-    return {
-      option: firstArgument[1],
-      count: inputArgs[1],
-      files: inputArgs.slice(2)
-    };
+    return createParameterObject(firstArgument[1], inputArgs[1], inputArgs.slice(2));
   }
 
   if (!isNaN(firstArgument)) {
-    return {
-      option: 'n',
-      count: Math.abs(firstArgument),
-      files: inputArgs.slice(1)
-    };
+    return createParameterObject('n', Math.abs(firstArgument), inputArgs.slice(1));
   }
-
-  return {
-    option: firstArgument[1],
-    count: firstArgument.slice(2),
-    files: inputArgs.slice(1)
-  };
+  
+  return createParameterObject(firstArgument[1], firstArgument.slice(2), inputArgs.slice(1));
 }
 
 const isValidOption = function (option) {
@@ -41,6 +25,10 @@ const isValidOption = function (option) {
 
 const hasDash = function (option) {
   return option.startsWith('-');
+}
+
+const createParameterObject = function (option, count, files) {
+  return { option, count, files };
 }
 
 module.exports = {

@@ -10,7 +10,9 @@ const {
 const {
   getFileDetails,
   getFileHeading,
-  getFileDetailsInReverse
+  getFileDetailsInReverse,
+  getFileContentWithHeading,
+  getFileContentWithoutHeading
 } = require("./fileLib.js");
 
 const { displayUsage, invalidCountMessage } = require("./errorLib.js");
@@ -65,11 +67,16 @@ const isInvalidOption = function(option) {
 const runCommand = function (filesDetail, commandValues) {
   let { option, count, command } = commandValues;
   let commandOperation = selectOperation(option);
-  let numberOfFiles = filesDetail.length;
   let fileContentOrder = selectFileContentOrder(command);
+  let formatter = getFileContentWithoutHeading;
+  
+  let numberOfFiles = filesDetail.length;
+  if (numberOfFiles > 1){
+    formatter = getFileContentWithHeading;
+  }
   return filesDetail.map((fileDetail) => {
     let fileFormatDetails = {
-      fileDetail, commandOperation, count, numberOfFiles,
+      fileDetail, commandOperation, count, formatter,
       fileContentOrder
     };
     return extractFileContent(fileFormatDetails);
@@ -103,19 +110,11 @@ const selectFileContentOrder = function (selectedCommand) {
 }
 
 const extractFileContent = function ({ fileDetail, commandOperation, count,
-  numberOfFiles, fileContentOrder }) {
+  formatter, fileContentOrder }) {
   if (fileDetail.isExists) {
-    let requiredFileContent = '';
     let fileContent = commandOperation(fileDetail.content, count);
-    let fileContentInOrder = fileContentOrder(fileContent);
-
-    if (numberOfFiles === 1) {
-      requiredFileContent = fileContentInOrder;
-      return requiredFileContent;
-    }
-    requiredFileContent = getFileHeading(fileDetail.name);
-    requiredFileContent += fileContentInOrder;
-    return requiredFileContent;
+    let requiredFileContent = fileContentOrder(fileContent);
+    return formatter(fileDetail.name, requiredFileContent);
   }
   return fileDetail.errorMessage;
 }
